@@ -1,0 +1,25 @@
+#######################################
+# Syntax Coloring Map TinyMatrixMath
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Matrix	KEYWORD1
+SquareMatrix	KEYWORD1
+Vector	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+determinant KEYWORD2
+transpose	KEYWORD2
+inverse KEYWORD2
+Identity	KEYWORD2
+Zeros	KEYWORD2
+cofactor	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
