@@ -6,7 +6,7 @@
 <p align="center"> 
 <img src=https://github.com/m516/TinyMatrixMath/actions/workflows/check-arduino.yml/badge.svg>
 <img src=https://github.com/m516/TinyMatrixMath/actions/workflows/check-cmake.yml/badge.svg>
-<img src=https://github.com/m516/TinyMatrixMath/actions/workflows/check-arduino.yml/badge.svg>
+<img src=https://github.com/m516/TinyMatrixMath/actions/workflows/compile-examples.yml/badge.svg>
 </p>
 
 <p align="center"> 
