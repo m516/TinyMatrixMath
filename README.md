@@ -3,6 +3,29 @@
   <p align="center"> Tiny Matrix Math </p>
 </h1>
 
+<p align="center"> 
+<img src=https://github.com/m516/TinyMatrixMath/actions/workflows/check-arduino.yml/badge.svg>
+<img src=https://github.com/m516/TinyMatrixMath/actions/workflows/check-cmake.yml/badge.svg>
+<img src=https://github.com/m516/TinyMatrixMath/actions/workflows/check-arduino.yml/badge.svg>
+</p>
+
+<p align="center"> 
+<img src=https://img.shields.io/github/issues/m516/TinyMatrixMath>
+<img src=https://img.shields.io/github/forks/m516/TinyMatrixMath>
+<img src=https://img.shields.io/github/stars/m516/TinyMatrixMath>
+<img src=https://img.shields.io/github/license/m516/TinyMatrixMath>
+</p>
+
+
+<!-- [![Arduino linter](https://github.com/m516/TinyMatrixMath/actions/workflows/check-arduino.yml/badge.svg)](https://github.com/m516/TinyMatrixMath/actions/workflows/check-arduino.yml)
+[![CMake build library and examples](https://github.com/m516/TinyMatrixMath/actions/workflows/check-cmake.yml/badge.svg)](https://github.com/m516/TinyMatrixMath/actions/workflows/check-cmake.yml)
+[![Arduino build and examples](https://github.com/m516/TinyMatrixMath/actions/workflows/check-arduino.yml/badge.svg)](https://github.com/m516/TinyMatrixMath/actions/workflows/compile-examples.yml)
+[![issues](https://img.shields.io/github/issues/m516/TinyMatrixMath)](https://github.com/m516/TinyMatrixMath/issues)
+[![forks](https://img.shields.io/github/forks/m516/TinyMatrixMath)](https://github.com/m516/TinyMatrixMath/network/members)
+[![stars](https://img.shields.io/github/stars/m516/TinyMatrixMath)](https://github.com/m516/TinyMatrixMath/graphs/traffic)
+[![license](https://img.shields.io/github/license/m516/TinyMatrixMath)](https://github.com/m516/TinyMatrixMath/blob/master/LICENSE) -->
+
+
 This library is a collection of functions and classes 
 for doing math on small matrices with less than 2kb of 
 instruction memory and 1kb of RAM.
