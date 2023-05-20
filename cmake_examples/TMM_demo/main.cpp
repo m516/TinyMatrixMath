@@ -2,7 +2,8 @@
 
 
 
-void setup() {// Creating a 3x3 identity matrix:
+int  main() {
+  // Creating a 3x3 identity matrix:
   tmm::Matrix<3,3> eye = tmm::Identity<3>();
   
   
@@ -24,7 +25,7 @@ void setup() {// Creating a 3x3 identity matrix:
   
   //------------------------------------//
   // Printing a matrix to Serial if the Arduio library is available
-  A.printTo(Serial);
+  A.printTo(std::cout);
   
   
   //------------------------------------//
@@ -45,7 +46,7 @@ void setup() {// Creating a 3x3 identity matrix:
   // Elementwise multiplication
   F = C.elementwise_times(D);
   // Print the result of subtraction
-  (C + D).printTo(Serial);
+  (C + D).printTo(std::cout);
   
   
   //------------------------------------//

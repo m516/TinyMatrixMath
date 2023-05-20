@@ -1,8 +1,12 @@
 #pragma once
 
-#include "TMM_enable_if.h"
+#include "TMM_enable_if.hpp"
 #ifdef ARDUINO
     #include <Arduino.h>
+#endif
+#ifdef USING_STANDARD_LIBRARY // a macro defined in CMakeLists.txt
+    #include <iostream>
+    #include <iomanip>
 #endif
 
 
@@ -10,27 +14,26 @@ namespace tmm{
 
 
     typedef unsigned char Size;
-    typedef float Scalar;
 
-    template<Size n, Size m>
+    template<Size n, Size m, typename Scalar = float>
     class Matrix{
         public:
 
         Scalar data[n][m];
 
-        Matrix<n,m>(){
+        Matrix(){
             for(Size i = 0; i < n; i++) 
             for(Size j = 0; j < m; j++) 
             data[i][j]=0;
         }
 
-        Matrix<n,m>(const Scalar M[n][m]){
+        Matrix(const float M[n][m]){
             for(Size i = 0; i < n; i++) 
             for(Size j = 0; j < m; j++) 
             data[i][j]=M[i][j];
         }
 
-        Matrix<n,m>(const Scalar M){
+        Matrix(const float M){
             for(Size i = 0; i < n; i++) 
             for(Size j = 0; j < m; j++) 
             data[i][j]=M;
@@ -39,7 +42,7 @@ namespace tmm{
 
         // Set this matrix to the value of another matrix
         void
-        operator=(const Matrix<n,m> &M){
+        operator=(const Matrix<n,m,Scalar> &M){
             for(Size i = 0; i < n; i++) 
             for(Size j = 0; j < m; j++) 
             data[i][j]=M.data[i][j];
@@ -76,10 +79,10 @@ namespace tmm{
         }
 
         template<Size q> 
-        Matrix<n, m+q>
-        augmentAfter(const Matrix<n,q> &other) const
+        Matrix<n,m+q,Scalar>
+        augmentAfter(const Matrix<n,q,Scalar> &other) const
         {
-            Matrix<n, m+q> M;
+            Matrix<n,m+q,Scalar> M;
             for(Size i = 0; i < n; i++) 
             for(Size j = 0; j < m; j++) 
             M[i][j]=data[i][j];
@@ -94,10 +97,10 @@ namespace tmm{
 
 
         template<Size q> 
-        Matrix<n, m+q>
-        augmentBefore(const Matrix<n,q> &other) const
+        Matrix<n,m+q,Scalar>
+        augmentBefore(const Matrix<n,q,Scalar> &other) const
         {
-            Matrix<n, m+q> M;
+            Matrix<n,m+q,Scalar> M;
             for(Size i = 0; i < n; i++) 
             for(Size j = 0; j < m; j++) 
             M[i][j+q]=data[i][j];
@@ -112,10 +115,10 @@ namespace tmm{
 
 
         template<Size p> 
-        Matrix<n+p, m>
-        augmentAbove(const Matrix<p,m> &other) const
+        Matrix<n+p,m,Scalar>
+        augmentAbove(const Matrix<p,m,Scalar> &other) const
         {
-            Matrix<n+p, m> M;
+            Matrix<n+p,m,Scalar> M;
             for(Size i = 0; i < n; i++) 
             for(Size j = 0; j < m; j++) 
             M[i+p][j]=data[i][j];
@@ -131,10 +134,10 @@ namespace tmm{
 
 
         template<Size p> 
-        Matrix<n+p, m>
-        augmentBelow(const Matrix<p,m> &other) const
+        Matrix<n+p,m,Scalar>
+        augmentBelow(const Matrix<p,m,Scalar> &other) const
         {
-            Matrix<n+p, m> M;
+            Matrix<n+p,m,Scalar> M;
             for(Size i = 0; i < n; i++) 
             for(Size j = 0; j < m; j++) 
             M[i][j]=data[i][j];
@@ -151,10 +154,10 @@ namespace tmm{
         // Matrix-matrix multiplication
         // For elementwise multiplication, use elementwise_multiplication(...)
         template<Size q> 
-        Matrix<n, q>
-        operator *(const Matrix<m, q> &other) const
+        Matrix<n,q,Scalar>
+        operator *(const Matrix<m,q,Scalar> &other) const
         {
-            Matrix<n, q> M;
+            Matrix<n,q,Scalar> M;
             for(Size i = 0; i < n; i++) 
             for(Size j = 0; j < q; j++) 
             for(Size k = 0; k < m; k++) 
@@ -166,10 +169,10 @@ namespace tmm{
 
 
         // Elementwise multiplication
-        Matrix<n, m>
-        elementwise_times(const Matrix<n,m> &other) const
+        Matrix<n,m,Scalar>
+        elementwise_times(const Matrix<n,m,Scalar> &other) const
         {
-            Matrix<n, m> M;
+            Matrix<n,m,Scalar> M;
             for(Size i = 0; i < n; i++)
             for(Size j = 0; j < m; j++)
             M[i][j]=data[i][j]*other.data[i][j];
@@ -180,10 +183,10 @@ namespace tmm{
 
 
         // Elementwise multiplication
-        Matrix<n, m>
+        Matrix<n,m,Scalar>
         negate() const
         {
-            Matrix<n, m> M;
+            Matrix<n,m,Scalar> M;
             for(Size i = 0; i < n; i++)
             for(Size j = 0; j < m; j++)
             M[i][j]=-data[i][j];
@@ -194,10 +197,10 @@ namespace tmm{
 
 
 
-        Matrix<n,m> 
-        operator +(const Matrix<n,m> &other) const
+        Matrix<n,m,Scalar> 
+        operator +(const Matrix<n,m,Scalar> &other) const
         {
-            Matrix<n,m> M;
+            Matrix<n,m,Scalar> M;
             for(Size i = 0; i < n; i++) 
             for(Size j = 0; j < m; j++) 
             M[i][j]=data[i][j]+other.data[i][j];
@@ -206,10 +209,10 @@ namespace tmm{
 
 
 
-        Matrix<n,m> 
-        operator -(const Matrix<n,m> &other) const
+        Matrix<n,m,Scalar> 
+        operator -(const Matrix<n,m,Scalar> &other) const
         {
-            Matrix<n,m> M;
+            Matrix<n,m,Scalar> M;
             for(Size i = 0; i < n; i++) 
             for(Size j = 0; j < m; j++) 
             M[i][j]=data[i][j]+other.data[i][j];
@@ -218,20 +221,20 @@ namespace tmm{
 
         
 
-        Matrix<n,m> 
+        Matrix<n,m,Scalar> 
         operator +(Scalar a) const
         {
-            Matrix<n,m> M;
+            Matrix<n,m,Scalar> M;
             for(Size i = 0; i < n; i++) 
             for(Size j = 0; j < m; j++) 
             M[i][j]=data[i][j]+a;
             return M;
         }
 
-        Matrix<n,m> 
+        Matrix<n,m,Scalar> 
         operator -(Scalar a) const
         {
-            Matrix<n,m> M;
+            Matrix<n,m,Scalar> M;
             for(Size i = 0; i < n; i++) 
             for(Size j = 0; j < m; j++) 
             M[i][j]=data[i][j]-a;
@@ -239,19 +242,19 @@ namespace tmm{
         }
 
         // Multiplication by a scalar
-        Matrix<n,m> 
+        Matrix<n,m,Scalar> 
         operator *(Scalar a) const
         {
-            Matrix<n,m> M;
+            Matrix<n,m,Scalar> M;
             for(Size i = 0; i < n; i++) 
             for(Size j = 0; j < m; j++) 
             M[i][j]=data[i][j]*a;
             return M;
         }
-        Matrix<n,m> 
+        Matrix<n,m,Scalar> 
         operator /(Scalar a) const
         {
-            Matrix<n,m> M;
+            Matrix<n,m,Scalar> M;
             for(Size i = 0; i < n; i++) 
             for(Size j = 0; j < m; j++) 
             M[i][j]=data[i][j]/a;
@@ -260,10 +263,10 @@ namespace tmm{
 
 
 
-        Matrix<m, n>
+        Matrix<m,n,Scalar>
         transpose() const
         {
-            Matrix<m, n> M;
+            Matrix<m,n,Scalar> M;
             for(Size i = 0; i < n; i++) 
             for(Size j = 0; j < m; j++) 
             M[j][i]=data[i][j];
@@ -279,10 +282,10 @@ namespace tmm{
 
         
         template<Size p, Size q>
-        Matrix<p, q>
+        Matrix<p,q,Scalar>
         get(Size c, Size d) const
         {
-            Matrix<p, q> M;
+            Matrix<p,q,Scalar> M;
             for(Size i = 0; i < p; i++) 
             for(Size j = 0; j < q; j++) 
             M[i][j]=data[i+c][j+d];     
@@ -298,7 +301,7 @@ namespace tmm{
         
         template<Size p, Size q>
         void
-        set(Size c, Size d, Matrix<p,q> newVal)
+        set(Size c, Size d, Matrix<p,q,Scalar> newVal)
         {
             for(Size i = 0; i < p; i++) 
             for(Size j = 0; j < q; j++) 
@@ -307,14 +310,14 @@ namespace tmm{
 
 
 
-        Matrix<1, m>
+        Matrix<1,m,Scalar>
         row(Size i) const
         {
             return get<1, m>(i, 0);
         }
 
         
-        Matrix<1, m>
+        Matrix<1,m,Scalar>
         column(Size j) const
         {
             return get<n,1>(0, j);
@@ -322,7 +325,7 @@ namespace tmm{
 
 
         void
-        copyTo(Matrix<n,m> &other) const
+        copyTo(Matrix<n,m,Scalar> &other) const
         {
             for(Size i = 0; i < n; i++) 
             for(Size j = 0; j < m; j++) 
@@ -347,24 +350,138 @@ namespace tmm{
             }
         }
         #endif
+        #ifdef USING_STANDARD_LIBRARY
+        void
+        printTo(std::ostream &out) const
+        {
+            for(Size i = 0; i < n; i++) 
+            {
+                for(Size j = 0; j < m; j++) 
+                {
+                    out << std::setw(6) << data[i][j];
+                    out << "\t";
+                }
+                out << std::endl;
+            }
+        }
+        #endif
+
+
+        #ifndef TMM_DISABLE_RECURSIVE
+        template <typename T = Scalar>
+        enable_if_t<(m==n), T>
+        determinant() const
+        {
+            if(n == 0) { return 1; }
+            if(n == 1) { return Matrix<n,n,Scalar>::data[0][0]; }
+            if(n == 2) { return Matrix<n,n,Scalar>::data[0][0] * Matrix<n,n,Scalar>::data[1][1] - Matrix<n,n,Scalar>::data[0][1] * Matrix<n,n,Scalar>::data[1][0]; }
+            Scalar sign = 1;
+            Scalar ret  = 0;
+            for(Size i = 0; i < n; i++){
+                // Get submatrix
+                Matrix<(n>0?n-1:n),(n>0?n-1:n),Scalar> submatrix; 
+                // the (n>0?n-1:n) trickery means decrement by one, 
+                // stopping at zero (in wich case this code is unreachable)
+                // It's a hack that can be replaced in newer C++ compilers
+
+
+                for(Size p = 0; p < n-1; p ++){ // for each row in submatrix
+                    for(Size q = 0; q < i; q++){ // for each column in submatrix until hitting the i'th column
+                        submatrix[p][q]=Matrix<n,n,Scalar>::data[p+1][q];
+                    }
+                    // skip the i'th column
+                    for(Size q = i+1; q < n; q++){
+                        submatrix[p][q]=Matrix<n,n,Scalar>::data[p+1][q-1];
+                    }
+                }
+                // end of code snippet
+                ret = ret + sign * Matrix<n,n,Scalar>::data[0][i] * submatrix.determinant();
+                sign = -sign;
+            }
+            return ret;
+        } // end determinant
 
 
 
-    };
 
-    template<Size n>
-    Matrix<n,n>
+
+        template <typename T = Matrix<n,n,Scalar>>
+        enable_if_t<(m==n), T>
+        cofactor() const
+        {
+            Matrix<n,n,Scalar> M;
+            for(Size i = 0; i < n; i ++){
+                for(Size j = 0; j < n; j++){
+                    //  Take the determinant of the matrix
+                    // formed by all elements that are not
+                    // in the i'th row or the j'th column.
+                    //
+                    //  Construct a temporary matrix with these
+                    // values so we can take the determinant 
+                    // of it.
+                    //
+                    // TODO simplify this garbage
+                    Matrix<n-1,n-1,Scalar> t;
+                    for(Size p = 0; p < i; p ++){
+                        for(Size q = 0; q < j; q++){
+                            t[p][q]=Matrix<n,n,Scalar>::data[p][q];
+                        }
+                        for(Size q = j+1; q < n; q++){
+                            t[p][q]=Matrix<n,n,Scalar>::data[p][q-1];
+                        }
+                    }
+                    for(Size p = i+1; p < n; p ++){
+                        for(Size q = 0; q < j; q++){
+                            t[p-1][q]=Matrix<n,n,Scalar>::data[p-1][q];
+                        }
+                        for(Size q = j+1; q < n; q++){
+                            t[p-1][q]=Matrix<n,n,Scalar>::data[p-1][q-1];
+                        }
+                    }
+                    M[i][j] = t.determinant();
+
+                    // Without this line, M would be a matrix of minors
+                    if (i+j%2==1) M[i][j] = -M[i][j];
+                }
+            }
+            return M;
+        }// end cofactor
+
+
+
+
+
+        template <typename T = Matrix<n,n,Scalar>>
+        enable_if_t<(m==n), T>
+        inverse() const
+        {
+            // The matrix is the adjugate divided by the determinant,
+            // where the adjugate is the cofactor transposed
+            Matrix<n,n,Scalar> adjugate = cofactor().transpose();
+            
+            return adjugate / determinant();
+        } // end inverse
+
+
+    #endif // ifndef DISABLE_RECURSIVE 
+
+
+
+    }; // end Matrix class
+
+    template<Size n, typename Scalar = float>
+    Matrix<n,n,Scalar>
     Identity(){
-        Matrix<n,n> I;
+        Matrix<n,n,Scalar> I;
         for(Size i = 0; i < n; i++)
         I[i][i]=1;
         return I;
     }
 
-    template<Size n, Size m>
-    Matrix<n,m>
+    template<Size n, Size m, typename Scalar = float>
+    Matrix<n,m,Scalar>
     Zeros(){
-        Matrix<n,m> M;
+        Matrix<n,m,Scalar> M;
         return M;
     }
 
