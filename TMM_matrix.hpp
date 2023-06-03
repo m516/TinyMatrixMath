@@ -2,6 +2,7 @@
 
 #include "TMM_enable_if.hpp"
 #ifdef ARDUINO
+    #pragma weak dtostrf // for fixed-width float printing to serial to create uniform-looking matrices
     #include <Arduino.h>
 #endif
 #ifdef USING_STANDARD_LIBRARY // a macro defined in CMakeLists.txt
@@ -15,8 +16,142 @@ namespace tmm{
 
     typedef unsigned char Size;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    template<Size n, Size m, typename Scalar>
+    class Matrix;
+
+    template<Size n, Size m, typename Scalar, typename ThisType>
+    class AbstractMatrix;
+    template<Size n, Size m, typename Scalar, typename Type_A, typename Type_B>
+    class DeferredOperatorAddition;
+
+    template<Size n, Size m, typename Scalar, typename ThisType>
+    class AbstractMatrix{
+        public:
+        virtual Matrix<n,m,Scalar> evaluate() const = 0;
+        virtual void evaluate(Matrix<n,m,Scalar> &dest) const = 0;
+
+
+        
+
+        operator Matrix<n,m,Scalar>() const {
+            return evaluate();
+        }
+    };
+
+    template<Size n, Size m, typename Scalar, typename Type_A, typename Type_B, typename ThisType>
+    class DeferredOperatorMatrix: public AbstractMatrix<n,m,Scalar,DeferredOperatorMatrix<n,m,Scalar,Type_A,Type_B,ThisType>>{
+
+        public:
+        DeferredOperatorMatrix(const Type_A &a, const Type_B &b): a(a),b(b){}
+        const Type_A &a;
+        const Type_B &b;
+        virtual Matrix<n,m,Scalar> evaluate() const = 0;
+        virtual void evaluate(Matrix<n,m,Scalar> &dest) const = 0;
+    };
+
+    template<Size n, Size m, typename Scalar, typename Type_A, typename Type_B>
+    class DeferredOperatorAddition: 
+        public DeferredOperatorMatrix<n,m,Scalar,Type_A,Type_B,DeferredOperatorAddition<n,m,Scalar,Type_A,Type_B>>
+    {
+        public:
+        DeferredOperatorAddition (const Type_A &a, const Type_B &b): 
+        DeferredOperatorMatrix<n,m,Scalar,Type_A,Type_B,DeferredOperatorAddition<n,m,Scalar,Type_A,Type_B>>(a,b){}
+        virtual Matrix<n,m,Scalar> evaluate() const {
+            Matrix<n,m,Scalar> result;
+            add(this->a.evaluate(), this->b.evaluate(), result);
+            return result;
+        }
+        virtual void evaluate(Matrix<n,m,Scalar> &dest) const {
+            // If incrementing ( A <- B + A )
+            if (&dest == (Matrix<n,m,Scalar>*)&(this->a)){
+                // If B is a Matrix type
+                if  constexpr (SameType<Type_B, Matrix<n,m,Scalar>>::value) {
+                    this->a.evaluate(dest);
+                    add(dest, (Matrix<n,m,Scalar>)(this->b), dest);
+                    return;
+                }
+                // If B is derived
+                else {
+                    this->a.evaluate(dest);
+                    add(dest, this->b.evaluate(), dest);
+                    return;
+                }
+            } // End if incrementing A
+            // TODO check if dest is b
+            // a.evaluate(dest);
+            // b.evaluate(dest);
+            add(this->a.evaluate(), this->b.evaluate(), dest);
+        }
+    };
+
+    // Let Matricies get added together
+    template<Size n, Size m, typename Scalar, typename Type1, typename Type2>
+    DeferredOperatorAddition<n, m, Scalar, AbstractMatrix<n,m,Scalar,Type1>, AbstractMatrix<n,m,Scalar,Type2>>
+    operator +(const AbstractMatrix<n,m,Scalar,Type1> &a, const AbstractMatrix<n,m,Scalar,Type2> &b) {
+        return DeferredOperatorAddition<n, m, Scalar, AbstractMatrix<n,m,Scalar,Type1>, AbstractMatrix<n,m,Scalar,Type2>>(a, b);
+    } 
+
+
+
+
+
+
+
+    // template<Size n, Size m, typename Scalar_A, typename Scalar_B>
+    // class matrix_add {
+    //     public:
+    //     matrix_add(Matrix<n,m,Scalar_A> const& a, Matrix<n,m,Scalar_B> const& b) : a(a), b(b) { }
+    //     operator Matrix<n,m,Scalar_A>() const {
+    //         Matrix<n,m,Scalar_A> result;
+    //         add(a, b, result);
+    //         return result;
+    //     }
+    //     private:
+    //     Matrix<n,m,Scalar_A> const& a;
+    //     Matrix<n,m,Scalar_B> const& b;
+    // };
+    // template<Size n, Size m, typename Scalar_A = float, typename Scalar_B = float>
+    // matrix_add<n, m, Scalar_A, Scalar_B> operator +(const Matrix<n,m,Scalar_A> &a, Matrix<n,m,Scalar_B> const& b) {
+    //     return matrix_add(a, b);
+    // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     template<Size n, Size m, typename Scalar = float>
-    class Matrix{
+    class Matrix: public AbstractMatrix<n,m,Scalar,Matrix<n,m,Scalar>>{
+
         public:
 
         Scalar data[n][m];
@@ -40,13 +175,26 @@ namespace tmm{
         }
 
 
-        // Set this matrix to the value of another matrix
+        // // Set this matrix to the value of another matrix
+        // template<typename Other_Scalar_Type = float> 
+        // void
+        // operator=(const Matrix<n,m,Other_Scalar_Type> &M){
+        //     for(Size i = 0; i < n; i++) 
+        //     for(Size j = 0; j < m; j++) 
+        //     data[i][j]=M.data[i][j];
+        // }
+
+
+
+
+
+        template<typename T>
         void
-        operator=(const Matrix<n,m,Scalar> &M){
-            for(Size i = 0; i < n; i++) 
-            for(Size j = 0; j < m; j++) 
-            data[i][j]=M.data[i][j];
+        operator=(AbstractMatrix<n,m,Scalar,T> &other){
+            other.evaluate(*this);
         }
+
+
 
 
         // Set this matrix to the value of a 2D array of scalars
@@ -78,9 +226,30 @@ namespace tmm{
             return data[0][0]; 
         }
 
-        template<Size q> 
+        
+        /// @brief Casts a matrix to a matrix of a different type.
+        /// For example, a Matrix<2,2,float> can be cast to a Matrix<2,2,double>.
+        /// If no template arguments are given, the default is to cast to a Matrix of floats.
+        /// @tparam Other_Scalar_Type 
+        template<typename Other_Scalar_Type = float> 
+        operator Matrix<n,m,Other_Scalar_Type>() const
+        {
+            Matrix<n,m,Other_Scalar_Type> M;
+            for(Size i = 0; i < n; i++) 
+            for(Size j = 0; j < m; j++) 
+            M[i][j]=data[i][j];
+            return M;
+        }
+
+
+        /// @brief Concatenates two matrices horizontally. The other matrix is placed to the right of (after) this one.
+        /// @tparam Other_Scalar_Type 
+        /// @tparam q 
+        /// @param other The matrix to concatenate to the right of this one
+        /// @return The augmented matrix
+        template<Size q, typename Other_Scalar_Type> 
         Matrix<n,m+q,Scalar>
-        augmentAfter(const Matrix<n,q,Scalar> &other) const
+        augmentAfter(const Matrix<n,q,Other_Scalar_Type> &other) const
         {
             Matrix<n,m+q,Scalar> M;
             for(Size i = 0; i < n; i++) 
@@ -93,12 +262,18 @@ namespace tmm{
             M[i][j+m]=other.data[i][j];
 
             return M;
-        }
+        } // end augmentAfter
 
 
-        template<Size q> 
+
+        /// @brief Concatenates two matrices horizontally. The other matrix is placed to the left of (before) this one.
+        /// @tparam Other_Scalar_Type 
+        /// @tparam q 
+        /// @param other The matrix to concatenate to the right of this one
+        /// @return The augmented matrix
+        template<Size q, typename Other_Scalar_Type> 
         Matrix<n,m+q,Scalar>
-        augmentBefore(const Matrix<n,q,Scalar> &other) const
+        augmentBefore(const Matrix<n,q,Other_Scalar_Type> &other) const
         {
             Matrix<n,m+q,Scalar> M;
             for(Size i = 0; i < n; i++) 
@@ -111,12 +286,19 @@ namespace tmm{
             M[i][j]=other[i][j];
 
             return M;
-        }
+        } // end augmentBefore
 
 
-        template<Size p> 
+
+
+        /// @brief Concatenates two matrices horizontally. The other matrix is placed to the right of (after) this one.
+        /// @tparam Other_Scalar_Type 
+        /// @tparam q 
+        /// @param other The matrix to concatenate to the right of this one
+        /// @return The augmented matrix
+        template<Size p, typename Other_Scalar_Type> 
         Matrix<n+p,m,Scalar>
-        augmentAbove(const Matrix<p,m,Scalar> &other) const
+        augmentAbove(const Matrix<p,m,Other_Scalar_Type> &other) const
         {
             Matrix<n+p,m,Scalar> M;
             for(Size i = 0; i < n; i++) 
@@ -129,13 +311,17 @@ namespace tmm{
             M[i][j]=other.data[i][j];
 
             return M;
-        }
+        } // end augmentAbove
 
 
-
-        template<Size p> 
+        /// @brief Concatenates two matrices vertically. The other matrix is placed below this one.
+        /// @tparam Other_Scalar_Type 
+        /// @tparam q 
+        /// @param other The matrix to concatenate below this one
+        /// @return The augmented matrix
+        template<Size p, typename Other_Scalar_Type> 
         Matrix<n+p,m,Scalar>
-        augmentBelow(const Matrix<p,m,Scalar> &other) const
+        augmentBelow(const Matrix<p,m,Other_Scalar_Type> &other) const
         {
             Matrix<n+p,m,Scalar> M;
             for(Size i = 0; i < n; i++) 
@@ -148,41 +334,21 @@ namespace tmm{
             M[i+n][j]=other.data[i][j];
 
             return M;
-        }
+        }  // end augmentBelow
 
 
-        // Matrix-matrix multiplication
-        // For elementwise multiplication, use elementwise_multiplication(...)
-        template<Size q> 
-        Matrix<n,q,Scalar>
-        operator *(const Matrix<m,q,Scalar> &other) const
-        {
-            Matrix<n,q,Scalar> M;
-            for(Size i = 0; i < n; i++) 
-            for(Size j = 0; j < q; j++) 
-            for(Size k = 0; k < m; k++) 
-            M[i][j]+=data[i][k]*other.data[k][j];
-            return M;
-        }
-
-        
 
 
-        // Elementwise multiplication
-        Matrix<n,m,Scalar>
-        elementwise_times(const Matrix<n,m,Scalar> &other) const
-        {
-            Matrix<n,m,Scalar> M;
-            for(Size i = 0; i < n; i++)
-            for(Size j = 0; j < m; j++)
-            M[i][j]=data[i][j]*other.data[i][j];
-            return M;
-        }
-
-        
 
 
-        // Elementwise multiplication
+
+
+
+
+
+
+
+        // Elementwise negation
         Matrix<n,m,Scalar>
         negate() const
         {
@@ -191,75 +357,9 @@ namespace tmm{
             for(Size j = 0; j < m; j++)
             M[i][j]=-data[i][j];
             return M;
-        }
+        } // end negate
 
         
-
-
-
-        Matrix<n,m,Scalar> 
-        operator +(const Matrix<n,m,Scalar> &other) const
-        {
-            Matrix<n,m,Scalar> M;
-            for(Size i = 0; i < n; i++) 
-            for(Size j = 0; j < m; j++) 
-            M[i][j]=data[i][j]+other.data[i][j];
-            return M;
-        }
-
-
-
-        Matrix<n,m,Scalar> 
-        operator -(const Matrix<n,m,Scalar> &other) const
-        {
-            Matrix<n,m,Scalar> M;
-            for(Size i = 0; i < n; i++) 
-            for(Size j = 0; j < m; j++) 
-            M[i][j]=data[i][j]+other.data[i][j];
-            return M;
-        }
-
-        
-
-        Matrix<n,m,Scalar> 
-        operator +(Scalar a) const
-        {
-            Matrix<n,m,Scalar> M;
-            for(Size i = 0; i < n; i++) 
-            for(Size j = 0; j < m; j++) 
-            M[i][j]=data[i][j]+a;
-            return M;
-        }
-
-        Matrix<n,m,Scalar> 
-        operator -(Scalar a) const
-        {
-            Matrix<n,m,Scalar> M;
-            for(Size i = 0; i < n; i++) 
-            for(Size j = 0; j < m; j++) 
-            M[i][j]=data[i][j]-a;
-            return M;
-        }
-
-        // Multiplication by a scalar
-        Matrix<n,m,Scalar> 
-        operator *(Scalar a) const
-        {
-            Matrix<n,m,Scalar> M;
-            for(Size i = 0; i < n; i++) 
-            for(Size j = 0; j < m; j++) 
-            M[i][j]=data[i][j]*a;
-            return M;
-        }
-        Matrix<n,m,Scalar> 
-        operator /(Scalar a) const
-        {
-            Matrix<n,m,Scalar> M;
-            for(Size i = 0; i < n; i++) 
-            for(Size j = 0; j < m; j++) 
-            M[i][j]=data[i][j]/a;
-            return M;
-        }
 
 
 
@@ -271,7 +371,27 @@ namespace tmm{
             for(Size j = 0; j < m; j++) 
             M[j][i]=data[i][j];
             return M;
-        }
+        } // end transpose
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         // Scalar
@@ -290,13 +410,13 @@ namespace tmm{
             for(Size j = 0; j < q; j++) 
             M[i][j]=data[i+c][j+d];     
             return M;
-        }
+        } // end get
 
         void
         set(Size i, Size j, Scalar newVal)
         {
             data[i][j] = newVal;
-        }
+        } // end set
 
         
         template<Size p, Size q>
@@ -306,7 +426,7 @@ namespace tmm{
             for(Size i = 0; i < p; i++) 
             for(Size j = 0; j < q; j++) 
             data[i+c][j+d] = newVal[i][j];    
-        }
+        } // end set
 
 
 
@@ -314,14 +434,14 @@ namespace tmm{
         row(Size i) const
         {
             return get<1, m>(i, 0);
-        }
+        } // end row
 
         
         Matrix<1,m,Scalar>
         column(Size j) const
         {
             return get<n,1>(0, j);
-        }
+        } // end column
 
 
         void
@@ -330,7 +450,41 @@ namespace tmm{
             for(Size i = 0; i < n; i++) 
             for(Size j = 0; j < m; j++) 
             other[i][j]=data[i][j];
+        } // end copyTo
+
+        /// @brief Returns a copy of this matrix. Required for AbstractMatrix
+        /// @return a copy of this matrix
+        virtual Matrix<n,m,Scalar> evaluate() const {
+            return *this;
         }
+
+        /// @brief Returns a copy of this matrix. Required for AbstractMatrix
+        /// @return a copy of this matrix
+        virtual void evaluate(Matrix<n,m,Scalar> &other) const {
+            copyTo(other);
+        }
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // Implementation-specific functions
         #ifdef ARDUINO
@@ -341,14 +495,19 @@ namespace tmm{
             {
                 for(Size j = 0; j < m; j++) 
                 {
-                    char buf[7];
-                    dtostrf(data[i][j], 6, 3, buf);
-                    serial.print(buf);
+                    if(dtostrf){
+                        char buf[7];
+                        dtostrf(data[i][j], 6, 3, buf);
+                        serial.print(buf);
+                    }
+                    else{
+                        serial.print(data[i][j]);
+                    }
                     serial.print("\t");
                 }
                 serial.println();
             }
-        }
+        } // end printTo
         #endif
         #ifdef USING_STANDARD_LIBRARY
         void
@@ -363,11 +522,34 @@ namespace tmm{
                 }
                 out << std::endl;
             }
-        }
+        } // end printTo
         #endif
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         #ifndef TMM_DISABLE_RECURSIVE
+
+        /// @brief Calculates the determinant of a square matrix
+        /// @return the determinant of the matrix
         template <typename T = Scalar>
         enable_if_t<(m==n), T>
         determinant() const
@@ -404,7 +586,8 @@ namespace tmm{
 
 
 
-
+        /// @brief Calculates the cofactor matrix of a square matrix
+        /// @return The cofactor matrix of the matrix
         template <typename T = Matrix<n,n,Scalar>>
         enable_if_t<(m==n), T>
         cofactor() const
@@ -450,7 +633,8 @@ namespace tmm{
 
 
 
-
+        /// @brief Calculates the inverse of a square matrix (WIP)
+        /// @return The inverse of the matrix
         template <typename T = Matrix<n,n,Scalar>>
         enable_if_t<(m==n), T>
         inverse() const
@@ -469,6 +653,21 @@ namespace tmm{
 
     }; // end Matrix class
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     template<Size n, typename Scalar = float>
     Matrix<n,n,Scalar>
     Identity(){
@@ -485,6 +684,121 @@ namespace tmm{
         return M;
     }
 
-    
 
-}
+
+    /// @brief Elementwise addition of two matrices
+    /// @tparam Scalar_A      The type of the first matrix
+    /// @tparam Scalar_B      The type of the second matrix
+    /// @tparam Scalar_Dest   The type of the result matrix
+    /// @tparam n             The number of rows in each matrix
+    /// @tparam m             The number of columns in each matrix
+    /// @param A              The first matrix
+    /// @param B              The second matrix
+    /// @param dest           A reference to the Matrix to store the result of A + B
+    template<Size n, Size m, typename Scalar_A = float, typename Scalar_B = float, typename Scalar_Dest = float>
+    void
+    add(const Matrix<n,m,Scalar_A> &A, const Matrix<n,m,Scalar_B> &B, Matrix<n,m,Scalar_Dest> &dest){
+        for(Size i = 0; i < n; i++)
+        for(Size j = 0; j < m; j++)
+        dest[i][j]=A.data[i][j]+B.data[i][j];
+    } // end add
+
+    /// @brief Elementwise addition of two matrices
+    /// @tparam Scalar_A      The source datatype
+    /// @tparam Scalar_Dest   The type of the result matrix
+    /// @tparam n             The number of rows in each matrix
+    /// @tparam m             The number of columns in each matrix
+    /// @param A              The first matrix
+    /// @param B              The second matrix
+    /// @param dest           A reference to the Matrix to store the result of A + B
+    template<Size n, Size m, typename Scalar_A = float, typename Scalar_Dest = float>
+    void
+    add(const Matrix<n,m,Scalar_A> &A, const Scalar_A &B, Matrix<n,m,Scalar_Dest> &dest){
+        for(Size i = 0; i < n; i++)
+        for(Size j = 0; j < m; j++)
+        dest[i][j]=A[i][j]+B;
+    } // end add
+
+
+    /// @brief Elementwise subtraction of two matrices
+    /// @tparam Scalar_A      The type of the first matrix
+    /// @tparam Scalar_B      The type of the second matrix
+    /// @tparam Scalar_Dest   The type of the result matrix
+    /// @tparam n             The number of rows in each matrix
+    /// @tparam m             The number of columns in each matrix
+    /// @param A              The first matrix
+    /// @param B              The second matrix
+    /// @param dest           A reference to the Matrix to store the result of A - B
+    template<Size n, Size m, typename Scalar_A = float, typename Scalar_B = float, typename Scalar_Dest = float>
+    void
+    subtract(const Matrix<n,m,Scalar_A> &A, const Matrix<n,m,Scalar_B> &B, Matrix<n,m,Scalar_Dest> &dest){
+        for(Size i = 0; i < n; i++)
+        for(Size j = 0; j < m; j++)
+        dest[i][j]=A[i][j]-B[i][j];
+    } // end subtract
+
+
+    /// @brief Elementwise multiplication of two matrices
+    /// @tparam Scalar_A      The type of the first matrix
+    /// @tparam Scalar_B      The type of the second matrix
+    /// @tparam Scalar_Dest   The type of the result matrix
+    /// @tparam n             The number of rows in each matrix
+    /// @tparam m             The number of columns in each matrix
+    /// @param A              The first matrix
+    /// @param B              The second matrix
+    /// @param dest           A reference to the Matrix to store the result of A .* B
+    template<Size n, Size m, typename Scalar_A = float, typename Scalar_B = float, typename Scalar_Dest = float>
+    void
+    elementwise_multiply(const Matrix<n,m,Scalar_A> &A, const Matrix<n,m,Scalar_B> &B, Matrix<n,m,Scalar_Dest> &dest){
+        for(Size i = 0; i < n; i++)
+        for(Size j = 0; j < m; j++)
+        dest[i][j]=A[i][j]*B[i][j];
+    } // end elementwise_multiply
+
+
+    /// @brief Elementwise division of two matrices
+    /// @tparam Scalar_A      The type of the first matrix
+    /// @tparam Scalar_B      The type of the second matrix
+    /// @tparam Scalar_Dest   The type of the result matrix
+    /// @tparam n             The number of rows in each matrix
+    /// @tparam m             The number of columns in each matrix
+    /// @param A              The first matrix
+    /// @param B              The second matrix
+    /// @param dest           A reference to the Matrix to store the result of A ./ B
+    template<Size n, Size m, typename Scalar_A = float, typename Scalar_B = float, typename Scalar_Dest = float>
+    void
+    elementwise_divide(const Matrix<n,m,Scalar_A> &A, const Matrix<n,m,Scalar_B> &B, Matrix<n,m,Scalar_Dest> &dest){
+        for(Size i = 0; i < n; i++)
+        for(Size j = 0; j < m; j++)
+        dest[i][j]=A[i][j]/B[i][j];
+    } // end elementwise_divide
+
+
+    /// @brief Matrix-matrix multiplication
+    /// @tparam n the number of rows in the first matrix
+    /// @tparam m the number of columns in the first matrix and the number of rows in the second matrix
+    /// @tparam q the number of columns in the second matrix
+    /// @tparam Scalar_A the type of the first matrix
+    /// @tparam Scalar_B the type of the second matrix
+    /// @tparam Scalar_Dest the type of the result matrix
+    /// @param A the first matrix
+    /// @param B the second matrix
+    /// @param dest The result of A*B
+    template<Size n, Size m, Size q, typename Scalar_A = float, typename Scalar_B = float, typename Scalar_Dest = float>
+    void
+    multiply(const Matrix<n,m,Scalar_A> &A, const Matrix<m,q,Scalar_B> &B, Matrix<n,q,Scalar_Dest> &dest){
+        for(Size i = 0; i < n; i++)
+        for(Size j = 0; j < q; j++){
+            dest[i][j]=0;
+            for(Size k = 0; k < m; k++)
+                dest[i][j]+=A[i][k]*B[k][j];
+        }
+    } // end multiply
+
+
+
+
+
+
+    
+} // end namespace tmm
