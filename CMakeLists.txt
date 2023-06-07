@@ -50,19 +50,29 @@ endif()
 
 # TinyMatrixMath
 add_library (tinymatrixmath ${PROJECT_SOURCES}
-TinyMatrixMath.hpp
-TMM_enable_if.hpp
-TMM_matrix.hpp
-TinyMatrixMath.cpp
+src/TinyMatrixMath.hpp
+src/TMM_enable_if.hpp
+src/TMM_matrix.hpp
+src/TinyMatrixMath.cpp
 )
 target_link_libraries (tinymatrixmath)
-target_include_directories(tinymatrixmath PUBLIC ${PROJECT_SOURCE_DIR})
+target_include_directories(tinymatrixmath PUBLIC ${PROJECT_SOURCE_DIR}/src)
+
+# TinyControlPolicy
+add_library (tinycontrolpolicies ${PROJECT_SOURCES}
+src/TCP_control_policy.hpp
+src/TCP_controller_PID.hpp
+src/TinyControlPolicies.cpp
+src/TinyControlPolicies.hpp
+)
+target_link_libraries (tinycontrolpolicies)
+target_include_directories(tinycontrolpolicies PUBLIC ${PROJECT_SOURCE_DIR}/src)
 
 
 # Google Test
-# message("${BoldYellow}Using local copy of the Google Test framework${ColorReset}")
-# add_subdirectory(thirdparty/googletest)
-# set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+message("${BoldYellow}Using local copy of the Google Test framework${ColorReset}")
+add_subdirectory(thirdparty/cmake/googletest)
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 
 message("${BoldYellow}Library search complete!${ColorReset}")
