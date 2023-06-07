@@ -2,7 +2,7 @@
 # Micah Mundy hereby disclaims all copyright interest in this file written the Arduino community.
 
 
-name: Compile Examples
+name: Arduino-Compile Sample Code
 
 # See: https://docs.github.com/en/free-pro-team@latest/actions/reference/events-that-trigger-workflows
 on:
