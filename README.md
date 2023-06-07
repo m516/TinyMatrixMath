@@ -4,9 +4,9 @@
 </h1>
 
 <p align="center"> 
-<img src=https://github.com/m516/TinyMatrixMath/actions/workflows/check-arduino.yml/badge.svg>
-<img src=https://github.com/m516/TinyMatrixMath/actions/workflows/check-cmake.yml/badge.svg>
-<img src=https://github.com/m516/TinyMatrixMath/actions/workflows/compile-examples.yml/badge.svg>
+<img src=https://github.com/m516/TinyMatrixMath/actions/workflows/cmake_tests.yml/badge.svg>
+<img src=https://github.com/m516/TinyMatrixMath/actions/workflows/arduino_compile_examples.yml/badge.svg>
+<img src=https://github.com/m516/TinyMatrixMath/actions/workflows/arduino_lint.yml/badge.svg>
 </p>
 
 <p align="center"> 
