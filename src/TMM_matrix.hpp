@@ -2,6 +2,7 @@
 
 #include "TMM_enable_if.hpp"
 #ifdef ARDUINO
+    #pragma weak dtostrf // for fixed-width float printing to serial to create uniform-looking matrices
     #include <Arduino.h>
 #endif
 #ifdef USING_STANDARD_LIBRARY // a macro defined in CMakeLists.txt
@@ -341,14 +342,19 @@ namespace tmm{
             {
                 for(Size j = 0; j < m; j++) 
                 {
-                    char buf[7];
-                    dtostrf(data[i][j], 6, 3, buf);
-                    serial.print(buf);
+                    if(dtostrf){
+                        char buf[7];
+                        dtostrf(data[i][j], 6, 3, buf);
+                        serial.print(buf);
+                    }
+                    else{
+                        serial.print(data[i][j]);
+                    }
                     serial.print("\t");
                 }
                 serial.println();
             }
-        }
+        } // end printTo
         #endif
         #ifdef USING_STANDARD_LIBRARY
         void
