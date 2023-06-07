@@ -1,8 +1,8 @@
 #pragma once
 
 #include "TMM_enable_if.hpp"
+#pragma weak dtostrf // for fixed-width float printing to serial to create uniform-looking matrices
 #ifdef ARDUINO
-    #pragma weak dtostrf // for fixed-width float printing to serial to create uniform-looking matrices
     #include <Arduino.h>
 #endif
 #ifdef USING_STANDARD_LIBRARY // a macro defined in CMakeLists.txt
