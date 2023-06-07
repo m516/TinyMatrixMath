@@ -53,6 +53,7 @@ add_library (tinymatrixmath ${PROJECT_SOURCES}
 src/TinyMatrixMath.hpp
 src/TMM_enable_if.hpp
 src/TMM_matrix.hpp
+src/TMM_matrix.cpp
 src/TinyMatrixMath.cpp
 )
 target_link_libraries (tinymatrixmath)
