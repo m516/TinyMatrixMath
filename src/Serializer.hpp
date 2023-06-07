@@ -5,7 +5,7 @@
 using uint8_t = std::uint8_t;
 #endif
 
-namespace tcp{
+namespace serializer{
 
     template<typename T>
     class Serializer{
