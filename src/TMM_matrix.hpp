@@ -4,8 +4,11 @@
 
 #include "TMM_enable_if.hpp"
 #ifdef ARDUINO
+    
     #pragma weak dtostrf // for fixed-width float printing to serial to create uniform-looking matrices
-    extern char* dtostrf (double __val, signed char __width, unsigned char __prec, char * __s);
+    extern "C" {
+        extern char* dtostrf (double __val, signed char __width, unsigned char __prec, char * __s);
+    }
     extern char* (*dtostrf_func)(double, signed char, unsigned char, char *);
 
     #include <Arduino.h>
