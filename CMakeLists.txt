@@ -48,6 +48,15 @@ else()
 endif()
 
 
+# Serializer
+add_library (serializer ${PROJECT_SOURCES}
+src/Serializer.hpp
+src/Serializer.cpp
+)
+target_link_libraries (serializer)
+target_include_directories(serializer PUBLIC ${PROJECT_SOURCE_DIR}/src)
+
+
 # TinyMatrixMath
 add_library (tinymatrixmath ${PROJECT_SOURCES}
 src/TinyMatrixMath.hpp
@@ -68,6 +77,7 @@ src/TinyControlPolicies.hpp
 )
 target_link_libraries (tinycontrolpolicies)
 target_include_directories(tinycontrolpolicies PUBLIC ${PROJECT_SOURCE_DIR}/src)
+
 
 
 # Google Test

@@ -1,6 +1,7 @@
 #pragma once
 
 #ifdef USING_STANDARD_LIBRARY
+#include <stdexcept>
 #include <cstdint>
 using uint8_t = std::uint8_t;
 #endif
@@ -18,24 +19,23 @@ namespace serializer{
 
 
     template<typename T>
-    class SerialPacket{
-        public:
-
-
-
-
-    };
-
-    template<typename T>
     class Serializer{
 
         public:
 
+        /// @brief a constant that is used to identify the beginning of a serialized object
+        uint8_t  prefix = 'a';
+        /// @brief a constant that is specific to the type of object being serialized
+        uint8_t  id;
+        T        object;
+        uint8_t  suffix = 'z';
+        uint16_t checksum;
+
         /// @brief Creates a 
         /// @param object 
         /// @param id 
-        Serializer(const T &object, uint8_t id) : _id(id), _object(object){
-            _checksum = compute_checksum();
+        Serializer(const T &object, uint8_t id) : id(id), object(object){
+            checksum = compute_checksum();
         }
 
         /// @brief Sends the object over a byte stream by repeatedly calling the "send_byte" function
@@ -45,19 +45,19 @@ namespace serializer{
         void serialize(Return_Type (*send_byte)(uint8_t)){
             // Serialization is done in five stages:
             // 1. The prefix
-            send_byte(_prefix);
+            send_byte(prefix);
             // 2. The id
-            send_byte(_id);
+            send_byte(id);
             // 3. The object
-            uint8_t * ptr = (uint8_t *) &_object;
+            uint8_t * ptr = (uint8_t *) &object;
             for(int i = 0; i < sizeof(T); i++){
                 send_byte(ptr[i]);
             }
             // 4. The suffix
-            send_byte(_suffix);
+            send_byte(suffix);
             // 5. The checksum
-            send_byte(_checksum);    // lsb
-            send_byte(_checksum>>8); // msb
+            send_byte(checksum);    // lsb
+            send_byte(checksum>>8); // msb
         }
 
         /// @brief Repeatedly call this function to receive the object over a byte stream.
@@ -67,7 +67,7 @@ namespace serializer{
         T* deserialize(uint8_t byte){
             enum ParseStage { stage_prefix, stage_id, stage_object, stage_suffix, stage_checksum };
             static ParseStage stage = prefix;
-            static uint8_t * ptr = (uint8_t *) &_object;
+            static uint8_t * ptr = (uint8_t *) &object;
 
             // Serialization is done in five stages:
             // 1. The prefix
@@ -83,12 +83,12 @@ namespace serializer{
 
             switch(stage){
                 case stage_prefix:                              // We expect the prefix
-                    if(byte == _prefix){                        // If it matches
+                    if(byte == prefix){                         // If it matches
                         stage = stage_id;                       //     Go to the next stage
                     }               
                     break;               
                 case stage_id:                                  // We expect the id
-                    if(byte == _prefix){                        // If it matches
+                    if(byte == prefix){                         // If it matches
                         stage = stage_object;                   //    Go to the next stage
                     }               
                     else{                                       // If it doesn't match
@@ -98,7 +98,7 @@ namespace serializer{
                 case stage_object:                              // We expect the object data itself
                     ptr++ = byte;                               // Store the byte in the object and increment the pointer
                     if(ptr >= object+sizeof(T)){                // If we've received all the bytes
-                        ptr = (uint8_t *) &_object;             //    Reset the pointer
+                        ptr = (uint8_t *) & object;             //    Reset the pointer
                         stage = stage_suffix;                   //    Go to the next stage
                     }
                     break;
@@ -111,7 +111,7 @@ namespace serializer{
                                                                 //        when we've received the first byte of the checksum.
                     }
                     break;
-                case checksum:                                  // We expect the checksum
+                case stage_checksum:                            // We expect the checksum
                     if(!checksum){                              // If this is the first byte of the checksum
                         checksum = byte;                        //    Store it
                     }
@@ -177,17 +177,12 @@ namespace serializer{
 
         /// @brief Sets the object to the given value and recomputes the checksum
         /// @param object 
-        enable_if_t< operator =(const T &object){
-            _object = object;
-            _checksum = compute_checksum();
+        void operator =(const T &object){
+            object = object;
+            checksum = compute_checksum();
         }
 
-
-        uint8_t  prefix = 'a';
-        uint8_t  id;
-        T        object;
-        uint8_t  suffix = 'z';
-        uint16_t checksum;
+        
 
 
 
@@ -195,13 +190,23 @@ namespace serializer{
 
         uint16_t compute_checksum(){
             uint8_t checksum = 0;
-            uint8_t * ptr = (uint8_t *) &_object;
+            uint8_t * ptr = (uint8_t *) &object;
             for(int i = 0; i < sizeof(T); i++){
                 checksum += ptr[i];
             }
             return checksum;
         } // end of compute_checksum
     }; // end of Serializer class
+
+    uint8_t create_unique_id(){
+        static uint8_t id = 1;
+        return id++;
+        #ifdef USING_STANDARD_LIBRARY
+        if(id == 0){
+            throw std::runtime_error("Too many objects have been serialized. The maximum number of unique objects is 255.");
+        }
+        #endif
+    }
 
 
 }
