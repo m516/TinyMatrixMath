@@ -4,8 +4,8 @@
 </h1>
 
 <p align="center"> 
-<img src=https://github.com/m516/TinyMatrixMath/actions/workflows/arduino_compile_examples.yml/badge.svg>
-<img src=https://github.com/m516/TinyMatrixMath/actions/workflows/arduino_lint.yml/badge.svg>
+  <img src=https://github.com/m516/TinyMatrixMath/actions/workflows/cmake_docs.yml/badge.svg>
+  <img src=https://github.com/m516/TinyMatrixMath/actions/workflows/cmake_tests.yml/badge.svg>
 </p>
 
 <p align="center"> 
