@@ -36,7 +36,7 @@ instruction memory and 1kb of RAM.
 
 It is available as:
 * a library in the Arduino Library Manager (Tiny Matrix Math)
-* as a CMake library (`TARGET_LINK_LIBRARIES (${EXECUTABLE_NAME} tinymatrixmath)`)
+* a CMake library (`TARGET_LINK_LIBRARIES (${EXECUTABLE_NAME} tinymatrixmath)`)
 
 
 --------------------
@@ -60,7 +60,7 @@ Despite this library being "tiny", it supports many common matrix operations inc
 - [X] transpose
 - [X] cofactor
 - [X] determinant
-- [ ] inverse *(implemented, may be buggy)*
+- [ ] inverse *(implemented, not working)*
 - [ ] eigenvalues
 - [ ] characteristic polynomial
 
