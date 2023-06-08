@@ -18,8 +18,12 @@ using uint8_t = std::uint8_t;
 namespace serializer{
 
 
+    
+
+
     /// @brief A general purpose basic serializer and deserializer for any instantiable data type.
     /// @tparam T the data type to serialize and deserialize
+    /// @todo separate the Serializer and Deserializer because they interfere with each other
     template<typename T>
     class Serializer{
 
@@ -79,9 +83,12 @@ namespace serializer{
         }
 
 
-        /// @brief Sends the object over a byte stream by repeatedly calling the "send_byte" function
+        /// @brief Sends the object over a byte stream by repeatedly calling the "send_byte" method 
+        /// from an instance of the `Object_type` class
+        /// @tparam Object_type a class with a method that accepts one uint8_t parameter
         /// @tparam Return_Type the return type of the send_byte function
-        /// @param send_byte a function that sends a byte over a stream of some sort
+        /// @param send_object an instance of Object_type
+        /// @param send_byte a method of  that sends a byte over a stream of some sort
         /// @note 
         /// If using a method of a class (i.e. Class instance; instance.method) invoke it like this:     <br>
         /// ~~~~~~~~~~~~~~~{.cpp}
@@ -109,6 +116,31 @@ namespace serializer{
             (send_object.*send_byte)(checksum);    // lsb
             (send_object.*send_byte)(checksum>>8); // msb
         }
+
+        /// @brief shorthand for `Serialzer.object=t; serialize(send_byte_function)`
+        /// @tparam Return_Type 
+        /// @param t the object to send
+        /// @param send_byte 
+        /// @see serialize(Return_Type (*send_byte)(uint8_t))
+        template<typename Return_Type>
+        void serialize(const T &t, Return_Type (*send_byte)(uint8_t)){
+            object = t;
+            serialize(send_byte);
+        }
+        
+
+        /// @brief shorthand for `Serialzer.object=t; serialize(send_object, send_byte)`
+        /// @tparam Return_Type 
+        /// @param t the object to send
+        /// @param send_object an instance of Object_type
+        /// @param send_byte a method of  that sends a byte over a stream of some sort
+        /// @see serialize(Object_type &send_object, Return_Type (Object_type::*send_byte)(uint8_t))
+        template<typename Object_type, typename Return_Type>
+        void serialize(const T &t, Object_type &send_object, Return_Type (Object_type::*send_byte)(uint8_t)){
+            object = t;
+            serialize(send_object, send_byte);
+        }
+
 
         /// @brief Repeatedly call this function to receive the object over a byte stream.
         /// @param incoming_byte the byte to receive
@@ -179,6 +211,9 @@ namespace serializer{
             } // end of switch
             return false;                                       // If we get here, we haven't received a proper object yet
         } // end of deserialize
+
+
+
 
 
 
@@ -258,6 +293,4 @@ namespace serializer{
         }
         #endif
     }
-
-
 }
