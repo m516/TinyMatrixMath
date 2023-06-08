@@ -45,14 +45,14 @@ TEST(SerializerTests, Serialize_Int) {
   Broadcaster broadcaster;
 
   // Serialize the object and transmit the message over the print stream
-  serializer::Serializer<int> serializer(a, 0);
-  serializer.serialize<Broadcaster, void>(broadcaster, &Broadcaster::send);
+  serializer::Serializer<int> serializer(0);
+  serializer.serialize<Broadcaster, void>(a, broadcaster, &Broadcaster::send);
 
   // Receive the message
   Receiver receiver(broadcaster);
 
   // Deserialize the message
-  serializer::Serializer<int> deserializer(0, 0);
+  serializer::Deserializer<int> deserializer(0);
   int a_deserialized = -1;
   while(true){
     int16_t read_result = receiver.receive();
@@ -76,15 +76,14 @@ TEST(SerializerTests, Serialize_Int_100x) {
   Receiver receiver(broadcaster);
 
   // Create the serializer...
-  serializer::Serializer<int> serializer(0, 0);
+  serializer::Serializer<int> serializer(0);
   // ... and the deserializer
-  serializer::Serializer<int> deserializer(0, 0);
+  serializer::Deserializer<int> deserializer(0);
 
   // Create the test object
   for(int i = 0; i < 100; i++){
       // Serialize the object i and transmit the message over the print stream
-      serializer = i;
-      serializer.serialize<Broadcaster, void>(broadcaster, &Broadcaster::send);
+      serializer.serialize<Broadcaster, void>(i, broadcaster, &Broadcaster::send);
 
       int i_deserialized = 0xDEADBEEF;
       while(true){
@@ -144,14 +143,14 @@ TEST(SerializerTests, Serialize_Struct) {
   Broadcaster broadcaster;
 
   // Serialize the object and transmit the message over the print stream
-  serializer::Serializer<struct Foo> serializer(foo, 0);
-  serializer.serialize<Broadcaster, void>(broadcaster, &Broadcaster::send);
+  serializer::Serializer<struct Foo> serializer(0);
+  serializer.serialize<Broadcaster, void>(foo, broadcaster, &Broadcaster::send);
 
   // Receive the message
   Receiver receiver(broadcaster);
 
   // Deserialize the message
-  serializer::Serializer<struct Foo> deserializer(0);
+  serializer::Deserializer<struct Foo> deserializer(0);
   struct Foo foo_deserialized;
   while(true){
     int16_t read_result = receiver.receive();

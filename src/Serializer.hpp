@@ -18,38 +18,49 @@ using uint8_t = std::uint8_t;
 namespace serializer{
 
 
-    
+
+    template<typename T>
+    uint16_t compute_checksum(const T &object){
+        uint16_t checksum = 0;
+        uint8_t * ptr = (uint8_t *) &object;
+        for(int i = 0; i < sizeof(T); i++){
+            checksum += ptr[i];
+        }
+        return checksum;
+    } // end of compute_checksum
 
 
-    /// @brief A general purpose basic serializer and deserializer for any instantiable data type.
-    /// @tparam T the data type to serialize and deserialize
-    /// @todo separate the Serializer and Deserializer because they interfere with each other
+    uint8_t create_unique_id(){
+        static uint8_t id = 1;
+        return id++;
+        #ifdef USING_STANDARD_LIBRARY
+        if(id == 0){
+            throw std::runtime_error("Too many objects have been serialized. The maximum number of unique objects is 255.");
+        }
+        #endif
+    }
+
+
+
+
+    /// @brief A general purpose basic serializer for any instantiable data type 
+    /// (compatible with the Deserializer class).
+    /// @tparam T the data type to serialize
     template<typename T>
     class Serializer{
 
         public:
 
-        /// @brief a constant that is used to identify the beginning of a serialized object
-        uint8_t  prefix = 'a';
-        /// @brief a constant that is specific to the type of object being serialized
-        uint8_t  id;
-        T        object;
-        uint8_t  suffix = 'z';
-        uint16_t checksum;
 
-        /// @brief Creates a Serializer that can deserialize and serialize 
-        /// objects and immediately serialize "object" with a call to "serialize"
-        /// @param object an object to serialize
-        /// @param id the unique ID of this Serializer. Make sure it equals the ID of the receieving deserializer.
-        Serializer(const T &object, uint8_t id) : id(id), object(object){
-            checksum = compute_checksum();
-        }
+        const uint8_t  prefix = 'a';
+        const uint8_t  id;
+        const uint8_t  suffix = 'z';
 
-        /// @brief Creates a Serializer that can deserialize and serialize objects
-        /// @param id 
-        Serializer(uint8_t id) : id(id), object(T()){
-            checksum = compute_checksum();
-        }
+        /// @brief Creates a Serializer that serialize objects
+        /// @param id the unique ID to give to this Serializer object.
+        Serializer(uint8_t id) : id(id){
+        };
+        
         
         /// @brief Sends the object over a byte stream by repeatedly calling the "send_byte" function
         /// @tparam Return_Type the return type of the send_byte function
@@ -64,7 +75,7 @@ namespace serializer{
         /// serialize_instance.serialize<Stream, void>(Serial, &Stream::write);
         /// ~~~~~~~~~~~~~~~
         template<typename Return_Type>
-        void serialize(Return_Type (*send_byte)(uint8_t)){
+        void serialize(const T &object, Return_Type (*send_byte)(uint8_t)){
             // Serialization is done in five stages:
             // 1. The prefix
             send_byte(prefix);
@@ -78,6 +89,7 @@ namespace serializer{
             // 4. The suffix
             send_byte(suffix);
             // 5. The checksum
+            uint16_t checksum = compute_checksum(object);
             send_byte(checksum);    // lsb
             send_byte(checksum>>8); // msb
         }
@@ -99,7 +111,7 @@ namespace serializer{
         /// serialize_instance.serialize<Stream, void>(Serial, &Stream::write);
         /// ~~~~~~~~~~~~~~~
         template<typename Object_type, typename Return_Type>
-        void serialize(Object_type &send_object, Return_Type (Object_type::*send_byte)(uint8_t)){
+        void serialize(const T &object, Object_type &send_object, Return_Type (Object_type::*send_byte)(uint8_t)){
             // Serialization is done in five stages:
             // 1. The prefix
             (send_object.*send_byte)(prefix);
@@ -113,34 +125,45 @@ namespace serializer{
             // 4. The suffix
             (send_object.*send_byte)(suffix);
             // 5. The checksum
+            uint16_t checksum = compute_checksum(object);
             (send_object.*send_byte)(checksum);    // lsb
             (send_object.*send_byte)(checksum>>8); // msb
         }
 
-        /// @brief shorthand for `Serialzer.object=t; serialize(send_byte_function)`
-        /// @tparam Return_Type 
-        /// @param t the object to send
-        /// @param send_byte 
-        /// @see serialize(Return_Type (*send_byte)(uint8_t))
-        template<typename Return_Type>
-        void serialize(const T &t, Return_Type (*send_byte)(uint8_t)){
-            object = t;
-            serialize(send_byte);
-        }
-        
+    }; // end of Serializer class
 
-        /// @brief shorthand for `Serialzer.object=t; serialize(send_object, send_byte)`
-        /// @tparam Return_Type 
-        /// @param t the object to send
-        /// @param send_object an instance of Object_type
-        /// @param send_byte a method of  that sends a byte over a stream of some sort
-        /// @see serialize(Object_type &send_object, Return_Type (Object_type::*send_byte)(uint8_t))
-        template<typename Object_type, typename Return_Type>
-        void serialize(const T &t, Object_type &send_object, Return_Type (Object_type::*send_byte)(uint8_t)){
-            object = t;
-            serialize(send_object, send_byte);
-        }
 
+
+
+
+
+
+
+
+
+
+
+
+
+    /// @brief A general purpose basic serializer and deserializer for any instantiable data type.
+    /// @tparam T the data type to serialize and deserialize
+    template<typename T>
+    class Deserializer{
+
+        public:
+
+        /// @brief a constant that is used to identify the beginning of a serialized object
+        const uint8_t  prefix = 'a';
+        /// @brief a constant that is specific to the type of object being serialized
+        const uint8_t  id;
+        T        object;
+        const uint8_t  suffix = 'z';
+        uint16_t checksum;
+
+        /// @brief Creates a Serializer that can deserialize and serialize objects
+        /// @param id 
+        Deserializer(uint8_t id) : id(id){
+        }
 
         /// @brief Repeatedly call this function to receive the object over a byte stream.
         /// @param incoming_byte the byte to receive
@@ -150,7 +173,7 @@ namespace serializer{
         bool deserialize(uint8_t incoming_byte, T *destination_object = nullptr){
             enum ParseStage { stage_prefix, stage_id, stage_object, stage_suffix, stage_checksum, stage_checksum_2 };
             static ParseStage stage = stage_prefix;
-            static uint8_t * ptr = (uint8_t *) &object;
+            static uint8_t * ptr; // for writing to the object
 
             // Serialization is done in five stages:
             // 1. The prefix
@@ -173,6 +196,7 @@ namespace serializer{
                 case stage_id:                                  // We expect the id
                     if(incoming_byte == id){                    // If it matches
                         stage = stage_object;                   //    Go to the next stage
+                        ptr = (uint8_t *) &object;              //    Reset the pointer
                     }               
                     else{                                       // If it doesn't match
                         stage = stage_prefix;                   //    Go back to the first stage. This isn't the packet we're looking for.
@@ -181,7 +205,6 @@ namespace serializer{
                 case stage_object:                              // We expect the object data itself
                     *(ptr++) = incoming_byte;                      // Store the byte in the object and increment the pointer
                     if(ptr >= (uint8_t *) &object+sizeof(T)){   // If we've received all the bytes
-                        ptr = (uint8_t *) & object;             //    Reset the pointer
                         stage = stage_suffix;                   //    Go to the next stage
                     }
                     break;
@@ -201,7 +224,7 @@ namespace serializer{
                 case stage_checksum_2:                          // We expect the most significant byte of the checksum
                     checksum += incoming_byte<<8;               //    Store it
                     stage = stage_prefix;                       //    Go back to the first stage
-                    if(checksum == compute_checksum()){         //    If the checksum matches           
+                    if(checksum == compute_checksum(object)){   //    If the checksum matches           
                         if(destination_object){                 //        If we have a valid pointer to an object
                             *destination_object = object;       //            Write the object to the given address
                         }
@@ -213,84 +236,6 @@ namespace serializer{
         } // end of deserialize
 
 
+    }; // end of Deserializer class
 
-
-
-
-
-
-    #ifdef ARDUINO
-    /// @brief (TODO test) Prints the object to the given serial port (or other Print object)
-    /// @param serial the Print object use to print the seralizedobject
-    bool
-    printTo(Print &serial) const
-    {
-        if(!serial) return false;
-        serialize_instance.serialize<Stream, void>(Serial, &Stream::write);
-    } // end printTo
-
-    /// @brief (TODO test) Reads the object from the given serial port (or other Stream object), blocking until the object is received.
-    /// @param serial the Stream object to read the serialized object from
-    /// @return a pointer to the object if the object, or a null pointer if the Stream is not available for some reason.
-    T*
-    readFrom(Stream &serial)
-    {
-        T *t = nullptr;
-        while(serial.available() && !t){
-            t = deserialize(serial.read);
-        }
-    } // end readFrom
-
-
-    /// @brief (TODO test) Attempts to read the object from the given serial port (or other Stream object)
-    /// @param serial the Stream object to read the serialized object from
-    /// @return a pointer to the object if the object; or a null pointer if the Stream is not 
-    /// available for some reason, or if the object is corrupted or otherwise not yet available.
-    T*
-    readFromNonBlocking(Stream &serial)
-    {
-        T *t = nullptr;
-        if(!serial.available()){
-            return nullptr;
-        }
-        t = deserialize(serial.read);
-    } // end readFrom
-
-
-    #endif
-
-
-
-        /// @brief Sets the object to the given value and recomputes the checksum
-        /// @param object 
-        void operator =(const T &new_value){
-            object = new_value;
-            checksum = compute_checksum();
-        }
-
-        
-
-
-
-        private:
-
-        uint16_t compute_checksum(){
-            uint16_t checksum = 0;
-            uint8_t * ptr = (uint8_t *) &object;
-            for(int i = 0; i < sizeof(T); i++){
-                checksum += ptr[i];
-            }
-            return checksum;
-        } // end of compute_checksum
-    }; // end of Serializer class
-
-    uint8_t create_unique_id(){
-        static uint8_t id = 1;
-        return id++;
-        #ifdef USING_STANDARD_LIBRARY
-        if(id == 0){
-            throw std::runtime_error("Too many objects have been serialized. The maximum number of unique objects is 255.");
-        }
-        #endif
-    }
 }
