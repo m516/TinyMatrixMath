@@ -4,8 +4,9 @@
 cmake_minimum_required (VERSION 3.10)
 
 # Options
-option(BUILD_TESTS "Build all projects in the 'test' folder" ON)
-option(BUILD_EXAMPLES "Build all projects in the 'examples' folder" ON)
+option(TINYMATRIXMATH_BUILD_TESTS    "Build all projects in the 'test' folder" ON)
+option(TINYMATRIXMATH_BUILD_EXAMPLES "Build all projects in the 'examples' folder" ON)
+option(TINYMATRIXMATH_BUILD_DOCS     "Build all projects in the 'examples' folder" ON)
 
 
 # Define colors
@@ -88,12 +89,28 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 message("${BoldYellow}Library search complete!${ColorReset}")
 
+  
 # Include tests.
-if(BUILD_TESTS)
+if(TINYMATRIXMATH_BUILD_TESTS)
 include(CTest)
 add_subdirectory ("test")
 endif()
 
-if(BUILD_EXAMPLES)
+
+# Include examples.
+if(TINYMATRIXMATH_BUILD_EXAMPLES)
 add_subdirectory(cmake_examples)
+endif()
+
+if(TINYMATRIXMATH_BUILD_DOCS)
+find_package(Doxygen)
+if(DOXYGEN_FOUND)
+set(DOXYGEN_GENERATE_HTML YES)
+set(DOXYGEN_GENERATE_MAN  YES)
+doxygen_add_docs(
+  TMM_doxygen
+  src
+  COMMENT "Generate docs"
+)
+endif()
 endif()
