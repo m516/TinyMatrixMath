@@ -11,8 +11,8 @@ namespace tcp{
     template<tmm::Size num_inputs, tmm::Size num_outputs, typename Scalar = float>
     class ControlPolicy{
         public:
-        tmm::Matrix<1, num_inputs,  Scalar> inputs;
-        tmm::Matrix<1, num_outputs, Scalar> outputs;
+        tmm::Matrix<num_inputs,  1, Scalar> inputs;
+        tmm::Matrix<num_outputs, 1, Scalar> outputs;
         virtual void update() = 0;
 
 
@@ -64,6 +64,7 @@ namespace tcp{
             auto since_epoch = time.time_since_epoch();
             auto millis = sc::duration_cast<sc::milliseconds>(since_epoch);
             long now = millis.count();
+            return now;
         }
         #endif
     };
