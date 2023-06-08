@@ -1,4 +1,4 @@
-name: CMake-Build and Tests
+name: CMake-Tests
 
 on:
   push:
@@ -31,10 +31,6 @@ jobs:
       # Build your program with the given configuration
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
-      
-    - name: Deploy Doxygen to GitHub Pages
-      uses: DenverCoder1/doxygen-github-pages-action@v1.3.0
-      
     - name: Test
       working-directory: ${{github.workspace}}/build
       # Execute tests defined by the CMake configuration.
