@@ -1,5 +1,7 @@
 <h1>
-  <p align="center"> Tiny Matrix Math </p>
+  <p align="center"> 
+  <img src=https://raw.githubusercontent.com/m516/TinyMatrixMath/main/docs/banner.png> 
+  </p>
 </h1>
 
 <p align="center"> 
