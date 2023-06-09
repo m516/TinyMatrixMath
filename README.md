@@ -37,23 +37,25 @@ It is available as:
 
 Despite this library being "tiny", it supports many common matrix operations including:
 
-- [X] matrix-scalar
-  - [X] addition
-  - [X] subtraction
-  - [X] multiplication
-  - [X] division
-- [X] matrix-matrix
-  - [X] addition
-  - [X] subtraction
-  - [X] multiplication
-  - [X] elementwise multiplication
-- [X] negation
-- [X] transpose
-- [X] cofactor
-- [X] determinant
-- [ ] inverse *(implemented, not working)*
-- [ ] eigenvalues
-- [ ] characteristic polynomial
+- matrix-scalar
+  - addition
+  - subtraction
+  - multiplication
+  - division
+- matrix-matrix
+  - addition
+  - subtraction
+  - multiplication
+  - elementwise multiplication
+- negation
+- transpose
+- cofactor
+- determinant
+- 🚧 inverse (implemented, not working) 
+- 🚧 eigenvalues and eigenvectors
+- 🚧 characteristic polynomial
+
+*Elements with 🚧 are not yet stable or implemented.*
 
 Most common mistakes with matrix operations are checked for at compile-time,
 so there's no need to worry about deploying code with the following issues:
