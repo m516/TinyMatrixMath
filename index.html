@@ -9,6 +9,10 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -46,6 +50,22 @@ $(function() {
 /* @license-end */</script>
 <div id="main-nav"></div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('index.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -60,15 +80,115 @@ $(function() {
 </iframe>
 </div>
 
-<div class="header">
+<div class="PageDoc"><div class="header">
   <div class="headertitle">
 <div class="title">TinyMatrixMath Documentation</div>  </div>
 </div><!--header-->
 <div class="contents">
+<div class="textblock"><p><a class="anchor" id="md_README"></a> </p><h1>Tiny Matrix Math  </h1>
+<p align="center"></p>
+<p><img src="https://github.com/m516/TinyMatrixMath/actions/workflows/cmake_docs.yml/badge.svg" alt="" style="pointer-events: none;" class="inline"/> <img src="https://github.com/m516/TinyMatrixMath/actions/workflows/cmake_tests.yml/badge.svg" alt="" style="pointer-events: none;" class="inline"/> </p>
+<p align="center"></p>
+<p><img src="https://github.com/m516/TinyMatrixMath/actions/workflows/arduino_compile_examples.yml/badge.svg" alt="" style="pointer-events: none;" class="inline"/> <img src="https://github.com/m516/TinyMatrixMath/actions/workflows/arduino_lint.yml/badge.svg" alt="" style="pointer-events: none;" class="inline"/> </p>
+<p align="center"></p>
+<p><img src="https://img.shields.io/github/issues/m516/TinyMatrixMath" alt="" class="inline"/> <img src="https://img.shields.io/github/forks/m516/TinyMatrixMath" alt="" class="inline"/> <img src="https://img.shields.io/github/stars/m516/TinyMatrixMath" alt="" class="inline"/> <img src="https://img.shields.io/github/license/m516/TinyMatrixMath" alt="" class="inline"/> </p>
+<p>This library is a collection of functions and classes for doing math on small matrices with less than 2kb of instruction memory and 1kb of RAM.</p>
+<p>It is available as:</p><ul>
+<li>a library in the Arduino Library Manager (Tiny Matrix Math)</li>
+<li>a CMake library (<code>TARGET_LINK_LIBRARIES (${EXECUTABLE_NAME} tinymatrixmath)</code>)</li>
+</ul>
+<hr  />
+<h2>Features  </h2>
+<p>Despite this library being "tiny", it supports many common matrix operations including:</p>
+<ul>
+<li>[X] matrix-scalar<ul>
+<li>[X] addition</li>
+<li>[X] subtraction</li>
+<li>[X] multiplication</li>
+<li>[X] division</li>
+</ul>
+</li>
+<li>[X] matrix-matrix<ul>
+<li>[X] addition</li>
+<li>[X] subtraction</li>
+<li>[X] multiplication</li>
+<li>[X] elementwise multiplication</li>
+</ul>
+</li>
+<li>[X] negation</li>
+<li>[X] transpose</li>
+<li>[X] cofactor</li>
+<li>[X] determinant</li>
+<li>[ ] inverse *(implemented, not working)*</li>
+<li>[ ] eigenvalues</li>
+<li>[ ] characteristic polynomial</li>
+</ul>
+<p>Most common mistakes with matrix operations are checked for at compile-time, so there's no need to worry about deploying code with the following issues:</p><ul>
+<li>matrices with invalid dimensions for matrix-matrix multiplication</li>
+<li>matrices with mismatching dimensions for elementwise operators</li>
+<li>taking the determinant, cofactor, and inverse of non-square matrices.</li>
+</ul>
+<p>Matrices with less than 256 rows and 256 columns are supported by this library (if your device can store a matrix with a whopping 263kb RAM!). Larger matrices might be processed more efficiently with Eigen.</p>
+<hr  />
+<h2>Examples  </h2>
+<p>Here are some examples of how to use the library:</p>
+<p><b>Including the library</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &quot;TinyMatrixMath.hpp&quot;</span></div>
+</div><!-- fragment --><p><b>Creating a 3x3 identity matrix:</b> </p><div class="fragment"><div class="line"><a class="code" href="classtmm_1_1Matrix.html">tmm::Matrix&lt;3,3&gt;</a> eye = tmm::Identity&lt;3&gt;();</div>
+<div class="ttc" id="aclasstmm_1_1Matrix_html"><div class="ttname"><a href="classtmm_1_1Matrix.html">tmm::Matrix</a></div><div class="ttdef"><b>Definition:</b> TMM_matrix.hpp:28</div></div>
+</div><!-- fragment --><hr  />
+<p><b>Creating a 3x3 matrix from a float array</b> </p><div class="fragment"><div class="line"><span class="keyword">const</span> tmm::Scalar A_raw[3][3] = {</div>
+<div class="line">{1, 2, 3},</div>
+<div class="line">{4, 5, 6},</div>
+<div class="line">{9, 8, 9}</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><a class="code" href="classtmm_1_1Matrix.html">tmm::Matrix&lt;3,3&gt;</a> A(A_raw);</div>
+</div><!-- fragment --><hr  />
+<p><b>Getting the inverse of a square matrix</b> </p><div class="fragment"><div class="line"><a class="code" href="classtmm_1_1Matrix.html">tmm::Matrix&lt;3,3&gt;</a> A_inv = A.inverse();</div>
+</div><!-- fragment --><hr  />
+<p><b>Printing a matrix to Serial if the Arduio library is available</b> </p><div class="fragment"><div class="line">A.printTo(Serial); <span class="comment">// Arduino</span></div>
+<div class="line">A.printTo(std::cout); <span class="comment">// CMake</span></div>
+</div><!-- fragment --><hr  />
+<p><b>Getting the determinant of a square matrix</b> </p><div class="fragment"><div class="line">tmm::Scalar det_A = A.determinant();</div>
+</div><!-- fragment --><hr  />
+<p><b>Use any sized matrix</b> </p><div class="fragment"><div class="line"><a class="code" href="classtmm_1_1Matrix.html">tmm::Matrix&lt;4,5&gt;</a> B;         <span class="comment">// 4 rows, 5 columns</span></div>
+<div class="line"><a class="code" href="classtmm_1_1Matrix.html">tmm::Matrix&lt;5,2&gt;</a> C;         <span class="comment">// 5 rows, 2 columns</span></div>
+<div class="line"><a class="code" href="classtmm_1_1Matrix.html">tmm::Matrix&lt;5,2&gt;</a> D;         <span class="comment">// 5 rows, 2 columns</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Matrix-matrix multiplication</span></div>
+<div class="line"><a class="code" href="classtmm_1_1Matrix.html">tmm::Matrix&lt;4,2&gt;</a> E = B * C; <span class="comment">// 4 rows, 2 columns</span></div>
+<div class="line"><span class="comment">// Elementwise addition</span></div>
+<div class="line"><a class="code" href="classtmm_1_1Matrix.html">tmm::Matrix&lt;5,2&gt;</a> F = C + D;</div>
+<div class="line"><span class="comment">// Elementwise multiplication</span></div>
+<div class="line">F = C.elementwise_times(D);</div>
+<div class="line"><span class="comment">// Elementwise subtraction, and print the result to Serial</span></div>
+<div class="line">(C - D).printTo(Serial);    <span class="comment">// Arduino</span></div>
+<div class="line">(C - D).printTo(std::cout); <span class="comment">// CMake</span></div>
+</div><!-- fragment --><hr  />
+<p><b>Invalid matrix multiplication is checked at compile-time.</b> </p><div class="fragment"><div class="line"><a class="code" href="classtmm_1_1Matrix.html">tmm::Matrix&lt;4,2&gt;</a> G = C * B; <span class="comment">// error: no match for &#39;operator*&#39; (operand types are &#39;tmm::Matrix&lt;5, 2, float&gt;&#39; and &#39;tmm::Matrix&lt;4, 5, float&gt;&#39;)</span></div>
+</div><!-- fragment --><hr  />
+<p><b>Elementwise scalar operations are supported</b> </p><div class="fragment"><div class="line"><a class="code" href="classtmm_1_1Matrix.html">tmm::Matrix&lt;2&gt;</a> H = 5;   <span class="comment">// set all elements to 5</span></div>
+<div class="line">H = H+1; <span class="comment">// add 1 to every element</span></div>
+<div class="line">H = H-2; <span class="comment">// reduce every element by 2</span></div>
+<div class="line">H = H*3; <span class="comment">// multiply every element by 3</span></div>
+<div class="line">H = H/4; <span class="comment">// divide every element by 4</span></div>
+</div><!-- fragment --><hr  />
+<p><b>1x1 matrices can be implicitly cast to Scalars</b> </p><div class="fragment"><div class="line"><a class="code" href="classtmm_1_1Matrix.html">tmm::Matrix&lt;1,1&gt;</a> I = 5;</div>
+<div class="line">tmm::Scalar s = I; <span class="comment">// s = 5</span></div>
+<div class="line">s = H; <span class="comment">// error: cannot convert &#39;tmm::Matrix&lt;2,2,float&gt;&#39; to &#39;float&#39; in assignment</span></div>
+</div><!-- fragment --><h2>More examples  </h2>
+<ul>
+<li>Arduino examples can be found in the "examples" folder</li>
+<li>Examples for CMake project can be found in the "cmake_examples" folder </li>
+</ul>
+</div></div><!-- PageDoc -->
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
 </body>
 </html>
