@@ -101,28 +101,29 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <h2>Features  </h2>
 <p>Despite this library being "tiny", it supports many common matrix operations including:</p>
 <ul>
-<li>[X] matrix-scalar<ul>
-<li>[X] addition</li>
-<li>[X] subtraction</li>
-<li>[X] multiplication</li>
-<li>[X] division</li>
+<li>matrix-scalar<ul>
+<li>addition</li>
+<li>subtraction</li>
+<li>multiplication</li>
+<li>division</li>
 </ul>
 </li>
-<li>[X] matrix-matrix<ul>
-<li>[X] addition</li>
-<li>[X] subtraction</li>
-<li>[X] multiplication</li>
-<li>[X] elementwise multiplication</li>
+<li>matrix-matrix<ul>
+<li>addition</li>
+<li>subtraction</li>
+<li>multiplication</li>
+<li>elementwise multiplication</li>
 </ul>
 </li>
-<li>[X] negation</li>
-<li>[X] transpose</li>
-<li>[X] cofactor</li>
-<li>[X] determinant</li>
-<li>[ ] inverse *(implemented, not working)*</li>
-<li>[ ] eigenvalues</li>
-<li>[ ] characteristic polynomial</li>
+<li>negation</li>
+<li>transpose</li>
+<li>cofactor</li>
+<li>determinant</li>
+<li>🚧 inverse (implemented, not working)</li>
+<li>🚧 eigenvalues and eigenvectors</li>
+<li>🚧 characteristic polynomial</li>
 </ul>
+<p><em>Elements with 🚧 are not yet stable or implemented.</em></p>
 <p>Most common mistakes with matrix operations are checked for at compile-time, so there's no need to worry about deploying code with the following issues:</p><ul>
 <li>matrices with invalid dimensions for matrix-matrix multiplication</li>
 <li>matrices with mismatching dimensions for elementwise operators</li>
