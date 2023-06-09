@@ -2,5 +2,5 @@
 	path = thirdparty/cmake/googletest
 	url = https://github.com/google/googletest.git
 [submodule "docs/doxygen-awesome-css"]
-	path = docs/doxygen-awesome-css
+	path = docs/thirdparty/doxygen-awesome-css/doxygen-awesome-css
 	url = https://github.com/jothepro/doxygen-awesome-css.git
