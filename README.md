@@ -1,4 +1,3 @@
---------------------
 <h1>
   <p align="center"> Tiny Matrix Math </p>
 </h1>
@@ -18,15 +17,6 @@
 </p>
 
 
-<!-- [![Arduino linter](https://github.com/m516/TinyMatrixMath/actions/workflows/check-arduino.yml/badge.svg)](https://github.com/m516/TinyMatrixMath/actions/workflows/check-arduino.yml)
-[![CMake build library and examples](https://github.com/m516/TinyMatrixMath/actions/workflows/check-cmake.yml/badge.svg)](https://github.com/m516/TinyMatrixMath/actions/workflows/check-cmake.yml)
-[![Arduino build and examples](https://github.com/m516/TinyMatrixMath/actions/workflows/check-arduino.yml/badge.svg)](https://github.com/m516/TinyMatrixMath/actions/workflows/compile-examples.yml)
-[![issues](https://img.shields.io/github/issues/m516/TinyMatrixMath)](https://github.com/m516/TinyMatrixMath/issues)
-[![forks](https://img.shields.io/github/forks/m516/TinyMatrixMath)](https://github.com/m516/TinyMatrixMath/network/members)
-[![stars](https://img.shields.io/github/stars/m516/TinyMatrixMath)](https://github.com/m516/TinyMatrixMath/graphs/traffic)
-[![license](https://img.shields.io/github/license/m516/TinyMatrixMath)](https://github.com/m516/TinyMatrixMath/blob/master/LICENSE) -->
-
-
 This library is a collection of functions and classes 
 for doing math on small matrices with less than 2kb of 
 instruction memory and 1kb of RAM.
@@ -37,6 +27,7 @@ It is available as:
 
 
 --------------------
+
 <h2>
   <p align="center"> Features </p>
 </h2>
@@ -74,6 +65,7 @@ might be processed more efficiently with Eigen.
 
 
 --------------------
+
 <h2>
   <p align="center"> Examples </p>
 </h2>
@@ -89,7 +81,9 @@ Here are some examples of how to use the library:
 ```cpp
   tmm::Matrix<3,3> eye = tmm::Identity<3>();
 ```
+
 -------------
+
 **Creating a 3x3 matrix from a float array**
 ```cpp
   const tmm::Scalar A_raw[3][3] = {
@@ -100,23 +94,31 @@ Here are some examples of how to use the library:
 
   tmm::Matrix<3,3> A(A_raw);
 ```
+
 -------------
+
 **Getting the inverse of a square matrix**
 ```cpp
   tmm::Matrix<3,3> A_inv = A.inverse();
 ```
+
 -------------
+
 **Printing a matrix to Serial if the Arduio library is available**
 ```cpp
   A.printTo(Serial); // Arduino
   A.printTo(std::cout); // CMake
 ```
+
 -------------
+
 **Getting the determinant of a square matrix**
 ```cpp
   tmm::Scalar det_A = A.determinant();
 ```
+
 -------------
+
 **Use any sized matrix**
 ```cpp
   tmm::Matrix<4,5> B;         // 4 rows, 5 columns
@@ -133,12 +135,16 @@ Here are some examples of how to use the library:
   (C - D).printTo(Serial);    // Arduino
   (C - D).printTo(std::cout); // CMake
 ```
+
 -------------
+
 **Invalid matrix multiplication is checked at compile-time.**
 ```cpp
   tmm::Matrix<4,2> G = C * B; // error: no match for 'operator*' (operand types are 'tmm::Matrix<5, 2, float>' and 'tmm::Matrix<4, 5, float>')
 ```
+
 -------------
+
 **Elementwise scalar operations are supported**
 ```cpp
   tmm::Matrix<2> H = 5;   // set all elements to 5
@@ -147,7 +153,9 @@ Here are some examples of how to use the library:
   H = H*3; // multiply every element by 3
   H = H/4; // divide every element by 4
 ```
+
 -------------
+
 **1x1 matrices can be implicitly cast to Scalars**
 ```cpp
   tmm::Matrix<1,1> I = 5;

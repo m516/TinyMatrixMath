@@ -1,0 +1,5 @@
+GENERATE_TREEVIEW      = YES
+DISABLE_INDEX = NO
+FULL_SIDEBAR = NO
+HTML_EXTRA_STYLESHEET  = thirdparty/doxygen-awesome-css/doxygen-awesome.css
+HTML_COLORSTYLE        = LIGHT

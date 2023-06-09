@@ -102,14 +102,22 @@ if(TINYMATRIXMATH_BUILD_EXAMPLES)
 add_subdirectory(cmake_examples)
 endif()
 
+# Documentation
 if(TINYMATRIXMATH_BUILD_DOCS)
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
 set(DOXYGEN_GENERATE_HTML YES)
 set(DOXYGEN_GENERATE_MAN  YES)
+set(DOXYGEN_GENERATE_TREEVIEW      YES)
+set(DOXYGEN_DISABLE_INDEX          NO)
+set(DOXYGEN_FULL_SIDEBAR           NO)
+set(DOXYGEN_HTML_STYLESHEET        ${PROJECT_SOURCE_DIR}/docs/thirdparty/doxygen-awesome-css/doxygen-awesome.css)
+set(DOXYGEN_HTML_COLORSTYLE        LIGHT)
+set(DOXYGEN_USE_MDFILE_AS_MAINPAGE ${PROJECT_SOURCE_DIR}/README.md)
 doxygen_add_docs(
   TMM_doxygen
-  src
+  ${PROJECT_SOURCE_DIR}/README.md
+  ${PROJECT_SOURCE_DIR}/src
   COMMENT "Generate docs"
 )
 endif()
