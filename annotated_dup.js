@@ -7,6 +7,7 @@ var annotated_dup =
     [ "tcp", null, [
       [ "ControlPolicy", "classtcp_1_1ControlPolicy.html", "classtcp_1_1ControlPolicy" ],
       [ "Controller_LTI", "classtcp_1_1Controller__LTI.html", "classtcp_1_1Controller__LTI" ],
+      [ "Controller_Passthrough", "classtcp_1_1Controller__Passthrough.html", "classtcp_1_1Controller__Passthrough" ],
       [ "Controller_PID", "classtcp_1_1Controller__PID.html", "classtcp_1_1Controller__PID" ]
     ] ],
     [ "tmm", null, [

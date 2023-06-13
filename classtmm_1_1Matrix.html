@@ -189,9 +189,9 @@ template&lt;typename T  = Scalar&gt; </td></tr>
 template&lt;typename T  = Matrix&lt;n,n,Scalar&gt;&gt; </td></tr>
 <tr class="memitem:ad3ffe159728e6dd39a38e200e563ba3c"><td class="memTemplItemLeft" align="right" valign="top">enable_if_t&lt;(m==n), T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>cofactor</b> () const</td></tr>
 <tr class="separator:ad3ffe159728e6dd39a38e200e563ba3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af133cec858bfa0d739cf02662bbf7c1f"><td class="memTemplParams" colspan="2"><a id="af133cec858bfa0d739cf02662bbf7c1f"></a>
-template&lt;typename T  = Matrix&lt;n,n,Scalar&gt;&gt; </td></tr>
-<tr class="memitem:af133cec858bfa0d739cf02662bbf7c1f"><td class="memTemplItemLeft" align="right" valign="top">enable_if_t&lt;(m==n), T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>inverse</b> () const</td></tr>
+<tr class="memitem:af133cec858bfa0d739cf02662bbf7c1f"><td class="memTemplParams" colspan="2">template&lt;typename T  = Matrix&lt;n,n,Scalar&gt;&gt; </td></tr>
+<tr class="memitem:af133cec858bfa0d739cf02662bbf7c1f"><td class="memTemplItemLeft" align="right" valign="top">enable_if_t&lt;(m==n), T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classtmm_1_1Matrix.html#af133cec858bfa0d739cf02662bbf7c1f">inverse</a> () const</td></tr>
+<tr class="memdesc:af133cec858bfa0d739cf02662bbf7c1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to invert the matrix.  <a href="classtmm_1_1Matrix.html#af133cec858bfa0d739cf02662bbf7c1f">More...</a><br /></td></tr>
 <tr class="separator:af133cec858bfa0d739cf02662bbf7c1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -200,6 +200,47 @@ Public Attributes</h2></td></tr>
 Scalar&#160;</td><td class="memItemRight" valign="bottom"><b>data</b> [n][m]</td></tr>
 <tr class="separator:a4dc6fc3b9013b0fa07057dafcc24f01f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="af133cec858bfa0d739cf02662bbf7c1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af133cec858bfa0d739cf02662bbf7c1f">&#9670;&nbsp;</a></span>inverse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;Size n, Size m, typename Scalar  = float&gt; </div>
+<div class="memtemplate">
+template&lt;typename T  = Matrix&lt;n,n,Scalar&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enable_if_t&lt;(m==n), T&gt; <a class="el" href="classtmm_1_1Matrix.html">tmm::Matrix</a>&lt; n, m, Scalar &gt;::inverse </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Attempts to invert the matrix. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>a helper parameter that ensures this function is only available on small matrices. (No need to set it.) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>an inverted matrix </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>This method is not implemented correctly yet. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>fix and test this method </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/<a class="el" href="TMM__matrix_8hpp_source.html">TMM_matrix.hpp</a></li>
 </ul>

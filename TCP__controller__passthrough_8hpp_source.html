@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>TinyMatrixMath: src/TinyControlPolicies.hpp Source File</title>
+<title>TinyMatrixMath: src/TCP_controller_passthrough.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -62,7 +62,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-$(document).ready(function(){initNavTree('TinyControlPolicies_8hpp_source.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('TCP__controller__passthrough_8hpp_source.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -82,21 +82,34 @@ $(document).ready(function(){initNavTree('TinyControlPolicies_8hpp_source.html',
 
 <div class="header">
   <div class="headertitle">
-<div class="title">TinyControlPolicies.hpp</div>  </div>
+<div class="title">TCP_controller_passthrough.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;TCP_control_policy.hpp&quot;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;TCP_controller_LTI.hpp&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;TCP_controller_PID.hpp&quot;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;TCP_controller_passthrough.hpp&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>tcp{</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    <span class="keyword">template</span>&lt;tmm::Size num_states, <span class="keyword">typename</span> Scalar = <span class="keywordtype">float</span>&gt;</div>
+<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="classtcp_1_1Controller__Passthrough.html">    9</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classtcp_1_1Controller__Passthrough.html">Controller_Passthrough</a>: <span class="keyword">public</span> <a class="code" href="classtcp_1_1ControlPolicy.html">ControlPolicy</a>&lt;num_states, num_states, Scalar&gt;{</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <span class="keyword">using</span> <a class="code" href="classtcp_1_1ControlPolicy.html">ControlPolicy&lt;num_inputs, num_outputs, Scalar&gt;::update_timestamp</a>;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> update(){</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;            this-&gt;outputs = this-&gt;inputs;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            <a class="code" href="classtcp_1_1ControlPolicy.html#a3a66119175b5b7148f0b85ce6ba4fb61">update_timestamp</a>();</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        } <span class="comment">// update()</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    }; <span class="comment">// class State</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;} <span class="comment">// namespace tcp</span></div>
+<div class="ttc" id="aclasstcp_1_1ControlPolicy_html"><div class="ttname"><a href="classtcp_1_1ControlPolicy.html">tcp::ControlPolicy</a></div><div class="ttdef"><b>Definition:</b> TCP_control_policy.hpp:12</div></div>
+<div class="ttc" id="aclasstcp_1_1ControlPolicy_html_a3a66119175b5b7148f0b85ce6ba4fb61"><div class="ttname"><a href="classtcp_1_1ControlPolicy.html#a3a66119175b5b7148f0b85ce6ba4fb61">tcp::ControlPolicy&lt; num_states, num_states, float &gt;::update_timestamp</a></div><div class="ttdeci">void update_timestamp()</div><div class="ttdoc">Call this at the end of your update() function to update the timekeeping variables.</div><div class="ttdef"><b>Definition:</b> TCP_control_policy.hpp:46</div></div>
+<div class="ttc" id="aclasstcp_1_1Controller__Passthrough_html"><div class="ttname"><a href="classtcp_1_1Controller__Passthrough.html">tcp::Controller_Passthrough</a></div><div class="ttdoc">A trivial controller that passes the input directly to the output.</div><div class="ttdef"><b>Definition:</b> TCP_controller_passthrough.hpp:9</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><b>TinyControlPolicies.hpp</b></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><b>TCP_controller_passthrough.hpp</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>

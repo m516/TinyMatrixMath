@@ -551,46 +551,46 @@ $(document).ready(function(){initNavTree('TMM__matrix_8hpp_source.html',''); ini
 <div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160; </div>
 <div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160; </div>
 <div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160; </div>
-<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160; </div>
-<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T = Matrix&lt;n,n,Scalar&gt;&gt;</div>
-<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;        enable_if_t&lt;(m==n), T&gt;</div>
-<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;        inverse()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;<span class="keyword">        </span>{</div>
-<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;            <span class="comment">// The matrix is the adjugate divided by the determinant,</span></div>
-<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;            <span class="comment">// where the adjugate is the cofactor transposed</span></div>
-<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;            <a class="code" href="classtmm_1_1Matrix.html">Matrix&lt;n,n,Scalar&gt;</a> adjugate = cofactor().transpose();</div>
-<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;            </div>
-<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;            <span class="keywordflow">return</span> adjugate / determinant();</div>
-<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;        } <span class="comment">// end inverse</span></div>
-<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160; </div>
-<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160; </div>
-<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;<span class="preprocessor">    #endif </span><span class="comment">// ifndef DISABLE_RECURSIVE </span></div>
-<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160; </div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T = Matrix&lt;n,n,Scalar&gt;&gt;</div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;        enable_if_t&lt;(m==n), T&gt;</div>
+<div class="line"><a name="l00474"></a><span class="lineno"><a class="line" href="classtmm_1_1Matrix.html#af133cec858bfa0d739cf02662bbf7c1f">  474</a></span>&#160;        <a class="code" href="classtmm_1_1Matrix.html#af133cec858bfa0d739cf02662bbf7c1f">inverse</a>() <span class="keyword">const</span></div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;        {</div>
+<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;            <span class="comment">// The matrix is the adjugate divided by the determinant,</span></div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;            <span class="comment">// where the adjugate is the cofactor transposed</span></div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;            <a class="code" href="classtmm_1_1Matrix.html">Matrix&lt;n,n,Scalar&gt;</a> adjugate = cofactor().transpose();</div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;            </div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;            <span class="keywordflow">return</span> adjugate / determinant();</div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;        } <span class="comment">// end inverse</span></div>
 <div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160; </div>
 <div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160; </div>
-<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;    }; <span class="comment">// end Matrix class</span></div>
+<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;<span class="preprocessor">    #endif </span><span class="comment">// ifndef DISABLE_RECURSIVE </span></div>
 <div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160; </div>
-<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;    <span class="keyword">template</span>&lt;Size n, <span class="keyword">typename</span> Scalar = <span class="keywordtype">float</span>&gt;</div>
-<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;    <a class="code" href="classtmm_1_1Matrix.html">Matrix&lt;n,n,Scalar&gt;</a></div>
-<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;    Identity(){</div>
-<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;        <a class="code" href="classtmm_1_1Matrix.html">Matrix&lt;n,n,Scalar&gt;</a> I;</div>
-<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;        <span class="keywordflow">for</span>(Size i = 0; i &lt; n; i++)</div>
-<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;        I[i][i]=1;</div>
-<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;        <span class="keywordflow">return</span> I;</div>
-<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;    }</div>
-<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160; </div>
-<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;    <span class="keyword">template</span>&lt;Size n, Size m, <span class="keyword">typename</span> Scalar = <span class="keywordtype">float</span>&gt;</div>
-<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;    Matrix&lt;n,m,Scalar&gt;</div>
-<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;    Zeros(){</div>
-<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;        Matrix&lt;n,m,Scalar&gt; M;</div>
-<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;        <span class="keywordflow">return</span> M;</div>
-<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;    }</div>
-<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160; </div>
-<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;    </div>
-<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160; </div>
-<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;}</div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160; </div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160; </div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;    }; <span class="comment">// end Matrix class</span></div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160; </div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;    <span class="keyword">template</span>&lt;Size n, <span class="keyword">typename</span> Scalar = <span class="keywordtype">float</span>&gt;</div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;    Matrix&lt;n,n,Scalar&gt;</div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;    Identity(){</div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;        Matrix&lt;n,n,Scalar&gt; I;</div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;        <span class="keywordflow">for</span>(Size i = 0; i &lt; n; i++)</div>
+<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;        I[i][i]=1;</div>
+<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;        <span class="keywordflow">return</span> I;</div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;    }</div>
+<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160; </div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;    <span class="keyword">template</span>&lt;Size n, Size m, <span class="keyword">typename</span> Scalar = <span class="keywordtype">float</span>&gt;</div>
+<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;    Matrix&lt;n,m,Scalar&gt;</div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;    Zeros(){</div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;        Matrix&lt;n,m,Scalar&gt; M;</div>
+<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;        <span class="keywordflow">return</span> M;</div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;    }</div>
 <div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160; </div>
+<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;    </div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160; </div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;}</div>
+<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160; </div>
 <div class="ttc" id="aclasstmm_1_1Matrix_html"><div class="ttname"><a href="classtmm_1_1Matrix.html">tmm::Matrix</a></div><div class="ttdef"><b>Definition:</b> TMM_matrix.hpp:28</div></div>
+<div class="ttc" id="aclasstmm_1_1Matrix_html_af133cec858bfa0d739cf02662bbf7c1f"><div class="ttname"><a href="classtmm_1_1Matrix.html#af133cec858bfa0d739cf02662bbf7c1f">tmm::Matrix::inverse</a></div><div class="ttdeci">enable_if_t&lt;(m==n), T &gt; inverse() const</div><div class="ttdoc">Attempts to invert the matrix.</div><div class="ttdef"><b>Definition:</b> TMM_matrix.hpp:474</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
