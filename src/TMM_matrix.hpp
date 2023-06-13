@@ -464,7 +464,11 @@ namespace tmm{
 
 
 
-
+        /// @brief Attempts to invert the matrix
+        /// @tparam T a helper parameter that ensures this function is only available on small matrices. (No need to set it.)
+        /// @return an inverted matrix
+        /// @warning This method is not implemented correctly yet.
+        /// @todo fix and test this method
         template <typename T = Matrix<n,n,Scalar>>
         enable_if_t<(m==n), T>
         inverse() const
