@@ -27,6 +27,6 @@ namespace tcp{
                         X =   X + X_dot*(Scalar)deltaTime;
             this->outputs = C*X + D*this->inputs;
             update_timestamp();
-        }
-    };
-}
+        } // update()
+    }; // class Controller_LTI
+} // namespace tcp
