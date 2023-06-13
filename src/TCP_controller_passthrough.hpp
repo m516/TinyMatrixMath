@@ -8,7 +8,7 @@ namespace tcp{
     template<tmm::Size num_states, typename Scalar = float>
     class Controller_Passthrough: public ControlPolicy<num_states, num_states, Scalar>{
         public:
-        using ControlPolicy<num_inputs, num_outputs, Scalar>::update_timestamp;
+        using ControlPolicy<num_states, num_states, Scalar>::update_timestamp;
         virtual void update(){
             this->outputs = this->inputs;
             update_timestamp();
