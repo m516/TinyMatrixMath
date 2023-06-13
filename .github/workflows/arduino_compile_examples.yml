@@ -47,9 +47,9 @@ jobs:
           - fqbn: arduino:megaavr:nona4809
             platforms: |
               - name: arduino:megaavr
-          - fqbn: arduino:sam:arduino_due_x_dbg
-            platforms: |
-              - name: arduino:sam
+#           - fqbn: arduino:sam:arduino_due_x_dbg # When this was enabled, it would fail.
+#             platforms: |                        # Linker error: undefined reference to `setup' and `loop'
+#               - name: arduino:sam
           - fqbn: arduino:samd:mkrzero
             platforms: |
               - name: arduino:samd
