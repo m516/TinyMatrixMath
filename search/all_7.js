@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['serialize_26',['serialize',['../classserializer_1_1Serializer.html#a40808d7a3342f44414a9471df9d8996d',1,'serializer::Serializer::serialize(const T &amp;object, Return_Type(*send_byte)(uint8_t))'],['../classserializer_1_1Serializer.html#afa701ecef33449a3e707c1637730f3be',1,'serializer::Serializer::serialize(const T &amp;object, Object_type &amp;send_object, Return_Type(Object_type::*send_byte)(uint8_t))']]],
-  ['serializer_27',['Serializer',['../classserializer_1_1Serializer.html#a3342661dcd033f7c0da88802796c3733',1,'serializer::Serializer::Serializer()'],['../classserializer_1_1Serializer.html',1,'serializer::Serializer&lt; T &gt;']]]
+  ['prefix_29',['prefix',['../classserializer_1_1Deserializer.html#aaea38ddece7a4b06a9d70bd009155ea0',1,'serializer::Deserializer']]]
 ];

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['time_5fsince_5flast_5fupdate_5fmilliseconds_28',['time_since_last_update_milliseconds',['../classtcp_1_1ControlPolicy.html#acdf0613a13c0419c68e349195f35d46d',1,'tcp::ControlPolicy']]],
-  ['time_5fsince_5flast_5fupdate_5fseconds_29',['time_since_last_update_seconds',['../classtcp_1_1ControlPolicy.html#a23cdc7b8a518555707f934fea36de834',1,'tcp::ControlPolicy']]],
-  ['todo_20list_30',['Todo List',['../todo.html',1,'']]]
+  ['serialize_30',['serialize',['../classserializer_1_1Serializer.html#a40808d7a3342f44414a9471df9d8996d',1,'serializer::Serializer::serialize(const T &amp;object, Return_Type(*send_byte)(uint8_t))'],['../classserializer_1_1Serializer.html#afa701ecef33449a3e707c1637730f3be',1,'serializer::Serializer::serialize(const T &amp;object, Object_type &amp;send_object, Return_Type(Object_type::*send_byte)(uint8_t))']]],
+  ['serializer_31',['Serializer',['../classserializer_1_1Serializer.html#a3342661dcd033f7c0da88802796c3733',1,'serializer::Serializer::Serializer()'],['../classserializer_1_1Serializer.html',1,'serializer::Serializer&lt; T &gt;']]],
+  ['states_32',['States',['../classtcp_1_1States.html',1,'tcp']]]
 ];

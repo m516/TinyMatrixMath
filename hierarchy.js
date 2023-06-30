@@ -11,8 +11,8 @@ var hierarchy =
       [ "tcp::Controller_Passthrough< num_states, Scalar >", "classtcp_1_1Controller__Passthrough.html", null ]
     ] ],
     [ "serializer::Deserializer< T >", "classserializer_1_1Deserializer.html", null ],
-    [ "enable_if< Cond, T >", "structenable__if.html", null ],
-    [ "enable_if< true, T >", "structenable__if_3_01true_00_01T_01_4.html", null ],
+    [ "tmm::enable_if< Cond, T >", "structtmm_1_1enable__if.html", null ],
+    [ "tmm::enable_if< true, T >", "structtmm_1_1enable__if_3_01true_00_01T_01_4.html", null ],
     [ "Link< Scalar >", "classLink.html", null ],
     [ "tmm::Matrix< n, m, Scalar >", "classtmm_1_1Matrix.html", null ],
     [ "tmm::Matrix< 1, 1, float >", "classtmm_1_1Matrix.html", null ],
@@ -23,5 +23,6 @@ var hierarchy =
     [ "tmm::Matrix< num_outputs, 1, float >", "classtmm_1_1Matrix.html", null ],
     [ "tmm::Matrix< num_outputs, num_inputs, float >", "classtmm_1_1Matrix.html", null ],
     [ "tmm::Matrix< num_outputs, num_internal_states, float >", "classtmm_1_1Matrix.html", null ],
-    [ "serializer::Serializer< T >", "classserializer_1_1Serializer.html", null ]
+    [ "serializer::Serializer< T >", "classserializer_1_1Serializer.html", null ],
+    [ "tcp::States< num_inputs, Scalar >", "classtcp_1_1States.html", null ]
 ];

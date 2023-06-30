@@ -111,9 +111,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const 
 Scalar *&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (Size i)</td></tr>
 <tr class="separator:a4c1bceb2af5a927e324ccdab436e9c6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6da16cbc4a2b2b99428c6f1b05b8d9b0"><td class="memTemplParams" colspan="2"><a id="a6da16cbc4a2b2b99428c6f1b05b8d9b0"></a>
-template&lt;typename T  = Scalar, typename  = enable_if_t&lt;(m==1&amp;&amp;n==1), T&gt;&gt; </td></tr>
-<tr class="memitem:a6da16cbc4a2b2b99428c6f1b05b8d9b0"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator T</b> ()</td></tr>
+template&lt;typename T  = Scalar, typename  = tmm::enable_if_t&lt;(m==1&amp;&amp;n==1), T&gt;&gt; </td></tr>
+<tr class="memitem:a6da16cbc4a2b2b99428c6f1b05b8d9b0"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classtmm_1_1Matrix.html#a6da16cbc4a2b2b99428c6f1b05b8d9b0">operator T</a> ()</td></tr>
+<tr class="memdesc:a6da16cbc4a2b2b99428c6f1b05b8d9b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicit casting to the Scalar type, enabled only if this matrix is 1x1. <br /></td></tr>
 <tr class="separator:a6da16cbc4a2b2b99428c6f1b05b8d9b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab01a4548b379e870c5a02f1ebef6446d"><td class="memTemplParams" colspan="2">template&lt;typename Other_Scalar &gt; </td></tr>
+<tr class="memitem:ab01a4548b379e870c5a02f1ebef6446d"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classtmm_1_1Matrix.html#ab01a4548b379e870c5a02f1ebef6446d">equals</a> (const <a class="el" href="classtmm_1_1Matrix.html">Matrix</a>&lt; n, m, Scalar &gt; &amp;other, Scalar tolerance) const</td></tr>
+<tr class="memdesc:ab01a4548b379e870c5a02f1ebef6446d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if all elements of this matrix are equal to the elements of another matrix, within some tolerance.  <a href="classtmm_1_1Matrix.html#ab01a4548b379e870c5a02f1ebef6446d">More...</a><br /></td></tr>
+<tr class="separator:ab01a4548b379e870c5a02f1ebef6446d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a453a766402c6d3891f6d837af0a990c8"><td class="memTemplParams" colspan="2">template&lt;typename Other_Scalar &gt; </td></tr>
+<tr class="memitem:a453a766402c6d3891f6d837af0a990c8"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classtmm_1_1Matrix.html#a453a766402c6d3891f6d837af0a990c8">operator==</a> (const <a class="el" href="classtmm_1_1Matrix.html">Matrix</a>&lt; n, m, Other_Scalar &gt; &amp;other) const</td></tr>
+<tr class="memdesc:a453a766402c6d3891f6d837af0a990c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if all elements of this matrix are identically equal to the elements of another matrix.  <a href="classtmm_1_1Matrix.html#a453a766402c6d3891f6d837af0a990c8">More...</a><br /></td></tr>
+<tr class="separator:a453a766402c6d3891f6d837af0a990c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64cadd061c0f9ded9b33c67810b04c08"><td class="memTemplParams" colspan="2"><a id="a64cadd061c0f9ded9b33c67810b04c08"></a>
 template&lt;Size q&gt; </td></tr>
 <tr class="memitem:a64cadd061c0f9ded9b33c67810b04c08"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classtmm_1_1Matrix.html">Matrix</a>&lt; n, m+q, Scalar &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>augmentAfter</b> (const <a class="el" href="classtmm_1_1Matrix.html">Matrix</a>&lt; n, q, Scalar &gt; &amp;other) const</td></tr>
@@ -178,21 +187,21 @@ template&lt;Size p, Size q&gt; </td></tr>
 <tr class="memitem:af54b1dd8a3edf4b3ff672e6e8b2cf58b"><td class="memItemLeft" align="right" valign="top"><a id="af54b1dd8a3edf4b3ff672e6e8b2cf58b"></a>
 <a class="el" href="classtmm_1_1Matrix.html">Matrix</a>&lt; 1, m, Scalar &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>column</b> (Size j) const</td></tr>
 <tr class="separator:af54b1dd8a3edf4b3ff672e6e8b2cf58b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a53f08cbacb9947357bd21af84e16ae91"><td class="memItemLeft" align="right" valign="top"><a id="a53f08cbacb9947357bd21af84e16ae91"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>copyTo</b> (<a class="el" href="classtmm_1_1Matrix.html">Matrix</a>&lt; n, m, Scalar &gt; &amp;other) const</td></tr>
+<tr class="memitem:a53f08cbacb9947357bd21af84e16ae91"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtmm_1_1Matrix.html#a53f08cbacb9947357bd21af84e16ae91">copyTo</a> (<a class="el" href="classtmm_1_1Matrix.html">Matrix</a>&lt; n, m, Scalar &gt; &amp;other) const</td></tr>
+<tr class="memdesc:a53f08cbacb9947357bd21af84e16ae91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies the contents of this matrix to another matrix.  <a href="classtmm_1_1Matrix.html#a53f08cbacb9947357bd21af84e16ae91">More...</a><br /></td></tr>
 <tr class="separator:a53f08cbacb9947357bd21af84e16ae91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac8757e5e202d6b6d6bfebdd2f5c0b0e6"><td class="memTemplParams" colspan="2"><a id="ac8757e5e202d6b6d6bfebdd2f5c0b0e6"></a>
+<tr class="memitem:a45869a7a73828512c5b4e1e2eff103fa"><td class="memTemplParams" colspan="2"><a id="a45869a7a73828512c5b4e1e2eff103fa"></a>
 template&lt;typename T  = Scalar&gt; </td></tr>
-<tr class="memitem:ac8757e5e202d6b6d6bfebdd2f5c0b0e6"><td class="memTemplItemLeft" align="right" valign="top">enable_if_t&lt;(m==n), T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>determinant</b> () const</td></tr>
-<tr class="separator:ac8757e5e202d6b6d6bfebdd2f5c0b0e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad3ffe159728e6dd39a38e200e563ba3c"><td class="memTemplParams" colspan="2"><a id="ad3ffe159728e6dd39a38e200e563ba3c"></a>
+<tr class="memitem:a45869a7a73828512c5b4e1e2eff103fa"><td class="memTemplItemLeft" align="right" valign="top">tmm::enable_if_t&lt;(m==n), T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>determinant</b> () const</td></tr>
+<tr class="separator:a45869a7a73828512c5b4e1e2eff103fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa51219d905d087478da42d13288ef799"><td class="memTemplParams" colspan="2"><a id="aa51219d905d087478da42d13288ef799"></a>
 template&lt;typename T  = Matrix&lt;n,n,Scalar&gt;&gt; </td></tr>
-<tr class="memitem:ad3ffe159728e6dd39a38e200e563ba3c"><td class="memTemplItemLeft" align="right" valign="top">enable_if_t&lt;(m==n), T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>cofactor</b> () const</td></tr>
-<tr class="separator:ad3ffe159728e6dd39a38e200e563ba3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af133cec858bfa0d739cf02662bbf7c1f"><td class="memTemplParams" colspan="2">template&lt;typename T  = Matrix&lt;n,n,Scalar&gt;&gt; </td></tr>
-<tr class="memitem:af133cec858bfa0d739cf02662bbf7c1f"><td class="memTemplItemLeft" align="right" valign="top">enable_if_t&lt;(m==n), T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classtmm_1_1Matrix.html#af133cec858bfa0d739cf02662bbf7c1f">inverse</a> () const</td></tr>
-<tr class="memdesc:af133cec858bfa0d739cf02662bbf7c1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to invert the matrix.  <a href="classtmm_1_1Matrix.html#af133cec858bfa0d739cf02662bbf7c1f">More...</a><br /></td></tr>
-<tr class="separator:af133cec858bfa0d739cf02662bbf7c1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa51219d905d087478da42d13288ef799"><td class="memTemplItemLeft" align="right" valign="top">tmm::enable_if_t&lt;(m==n), T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>cofactor</b> () const</td></tr>
+<tr class="separator:aa51219d905d087478da42d13288ef799"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75f6e93616f66d682dec1946dd6ad104"><td class="memTemplParams" colspan="2">template&lt;typename T  = Matrix&lt;n,n,Scalar&gt;&gt; </td></tr>
+<tr class="memitem:a75f6e93616f66d682dec1946dd6ad104"><td class="memTemplItemLeft" align="right" valign="top">tmm::enable_if_t&lt;(m==n), T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classtmm_1_1Matrix.html#a75f6e93616f66d682dec1946dd6ad104">inverse</a> () const</td></tr>
+<tr class="memdesc:a75f6e93616f66d682dec1946dd6ad104"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to invert the matrix.  <a href="classtmm_1_1Matrix.html#a75f6e93616f66d682dec1946dd6ad104">More...</a><br /></td></tr>
+<tr class="separator:a75f6e93616f66d682dec1946dd6ad104"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -201,8 +210,100 @@ Scalar&#160;</td><td class="memItemRight" valign="bottom"><b>data</b> [n][m]</td
 <tr class="separator:a4dc6fc3b9013b0fa07057dafcc24f01f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="af133cec858bfa0d739cf02662bbf7c1f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af133cec858bfa0d739cf02662bbf7c1f">&#9670;&nbsp;</a></span>inverse()</h2>
+<a id="a53f08cbacb9947357bd21af84e16ae91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53f08cbacb9947357bd21af84e16ae91">&#9670;&nbsp;</a></span>copyTo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;Size n, Size m, typename Scalar  = float&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classtmm_1_1Matrix.html">tmm::Matrix</a>&lt; n, m, Scalar &gt;::copyTo </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classtmm_1_1Matrix.html">Matrix</a>&lt; n, m, Scalar &gt; &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Copies the contents of this matrix to another matrix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>the matrix to copy to </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab01a4548b379e870c5a02f1ebef6446d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab01a4548b379e870c5a02f1ebef6446d">&#9670;&nbsp;</a></span>equals()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;Size n, Size m, typename Scalar  = float&gt; </div>
+<div class="memtemplate">
+template&lt;typename Other_Scalar &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classtmm_1_1Matrix.html">tmm::Matrix</a>&lt; n, m, Scalar &gt;::equals </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classtmm_1_1Matrix.html">Matrix</a>&lt; n, m, Scalar &gt; &amp;&#160;</td>
+          <td class="paramname"><em>other</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Scalar&#160;</td>
+          <td class="paramname"><em>tolerance</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns true if all elements of this matrix are equal to the elements of another matrix, within some tolerance. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Other_Scalar</td><td>the type of the other matrix </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>the matrix to compare to </td></tr>
+    <tr><td class="paramname">tolerance</td><td>the tolerance to use when comparing elements </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if all elements of this matrix are equal to the elements of another matrix, within some tolerance </dd></dl>
+
+</div>
+</div>
+<a id="a75f6e93616f66d682dec1946dd6ad104"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75f6e93616f66d682dec1946dd6ad104">&#9670;&nbsp;</a></span>inverse()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -215,7 +316,7 @@ template&lt;typename T  = Matrix&lt;n,n,Scalar&gt;&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">enable_if_t&lt;(m==n), T&gt; <a class="el" href="classtmm_1_1Matrix.html">tmm::Matrix</a>&lt; n, m, Scalar &gt;::inverse </td>
+          <td class="memname">tmm::enable_if_t&lt;(m==n), T&gt; <a class="el" href="classtmm_1_1Matrix.html">tmm::Matrix</a>&lt; n, m, Scalar &gt;::inverse </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -238,6 +339,46 @@ template&lt;typename T  = Matrix&lt;n,n,Scalar&gt;&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>an inverted matrix </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>This method is not implemented correctly yet. </dd></dl>
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>fix and test this method </dd></dl>
+
+</div>
+</div>
+<a id="a453a766402c6d3891f6d837af0a990c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a453a766402c6d3891f6d837af0a990c8">&#9670;&nbsp;</a></span>operator==()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;Size n, Size m, typename Scalar  = float&gt; </div>
+<div class="memtemplate">
+template&lt;typename Other_Scalar &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classtmm_1_1Matrix.html">tmm::Matrix</a>&lt; n, m, Scalar &gt;::operator== </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classtmm_1_1Matrix.html">Matrix</a>&lt; n, m, Other_Scalar &gt; &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns true if all elements of this matrix are identically equal to the elements of another matrix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>the matrix to compare to </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if all elements of this matrix are identically equal to the elements of another matrix </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>For floating-point matrices, consider using <a class="el" href="classtmm_1_1Matrix.html#ab01a4548b379e870c5a02f1ebef6446d" title="Returns true if all elements of this matrix are equal to the elements of another matrix,...">equals()</a> instead. <a class="el" href="classtmm_1_1Matrix.html#ab01a4548b379e870c5a02f1ebef6446d" title="Returns true if all elements of this matrix are equal to the elements of another matrix,...">equals()</a> allows for a tolerance. </dd></dl>
 
 </div>
 </div>

@@ -89,21 +89,22 @@ $(document).ready(function(){initNavTree('TMM__enable__if_8hpp_source.html','');
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">// Sample usage: enable_if_t&lt;condition, function_return_type&gt; function_name(){...; return ...;}</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="structenable__if.html">    7</a></span>&#160;<span class="keyword">template</span>&lt;<span class="keywordtype">bool</span> Cond, <span class="keyword">class</span> T = <span class="keywordtype">void</span>&gt; <span class="keyword">struct </span><a class="code" href="structenable__if.html">enable_if</a> {};</div>
-<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="structenable__if_3_01true_00_01T_01_4.html">    8</a></span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">struct </span><a class="code" href="structenable__if.html">enable_if</a>&lt;true, T&gt; { <span class="keyword">typedef</span> T type; };</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">template</span>&lt; <span class="keywordtype">bool</span> B, <span class="keyword">class</span> T = <span class="keywordtype">void</span> &gt;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">using</span> enable_if_t = <span class="keyword">typename</span> <a class="code" href="structenable__if.html">enable_if&lt;B,T&gt;::type</a>;</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">// Example:</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">//      enable this_function only if n==1 and m==1, and its return type is Scalar</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">//      enable_if_t&lt;(n==1&amp;&amp;m==1), insert_return_type_here&gt;::type() this_function(){return insert_return_type_here();}</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span>tmm{</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">// Sample usage: enable_if_t&lt;condition, function_return_type&gt; function_name(){...; return ...;}</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="structtmm_1_1enable__if.html">   13</a></span>&#160;    <span class="keyword">template</span>&lt;<span class="keywordtype">bool</span> Cond, <span class="keyword">class</span> T = <span class="keywordtype">void</span>&gt; <span class="keyword">struct </span><a class="code" href="structtmm_1_1enable__if.html">enable_if</a> {};</div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="structtmm_1_1enable__if_3_01true_00_01T_01_4.html">   14</a></span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">struct </span><a class="code" href="structtmm_1_1enable__if.html">enable_if</a>&lt;true, T&gt; { <span class="keyword">typedef</span> T type; };</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">// Example:</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">//      enable this_function only if n==1 and m==1, and its return type is Scalar</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">//      enable_if_t&lt;(n==1&amp;&amp;m==1), insert_return_type_here&gt;::type() this_function(){return insert_return_type_here();}</span></div>
-<div class="ttc" id="astructenable__if_html"><div class="ttname"><a href="structenable__if.html">enable_if</a></div><div class="ttdef"><b>Definition:</b> TMM_enable_if.hpp:7</div></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">template</span>&lt; <span class="keywordtype">bool</span> B, <span class="keyword">class</span> T = <span class="keywordtype">void</span> &gt;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">using</span> enable_if_t = <span class="keyword">typename</span> <a class="code" href="structtmm_1_1enable__if.html">enable_if&lt;B,T&gt;::type</a>;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;}</div>
+<div class="ttc" id="astructtmm_1_1enable__if_html"><div class="ttname"><a href="structtmm_1_1enable__if.html">tmm::enable_if</a></div><div class="ttdef"><b>Definition:</b> TMM_enable_if.hpp:13</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

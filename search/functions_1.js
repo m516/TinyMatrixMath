@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['instantaneous_5fupdate_5fperiod_5fmilliseconds_55',['instantaneous_update_period_milliseconds',['../classtcp_1_1ControlPolicy.html#a11e04917e11ddb8d8b39a06567c8873a',1,'tcp::ControlPolicy']]],
-  ['instantaneous_5fupdate_5fperiod_5fseconds_56',['instantaneous_update_period_seconds',['../classtcp_1_1ControlPolicy.html#ad11952c144d4bdce535eb83f0d855147',1,'tcp::ControlPolicy']]],
-  ['inverse_57',['inverse',['../classtmm_1_1Matrix.html#af133cec858bfa0d739cf02662bbf7c1f',1,'tmm::Matrix']]]
+  ['deserialize_60',['deserialize',['../classserializer_1_1Deserializer.html#a6a97d17d3ad7902e49b828309b6b1cf8',1,'serializer::Deserializer']]],
+  ['deserializer_61',['Deserializer',['../classserializer_1_1Deserializer.html#a43a1c424755c34fd897f18d8a5a86d2e',1,'serializer::Deserializer']]]
 ];

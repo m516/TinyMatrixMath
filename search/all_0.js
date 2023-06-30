@@ -6,5 +6,6 @@ var searchData=
   ['controlpolicy_3',['ControlPolicy',['../classtcp_1_1ControlPolicy.html',1,'tcp']]],
   ['controlpolicy_3c_201_2c_201_2c_20float_20_3e_4',['ControlPolicy&lt; 1, 1, float &gt;',['../classtcp_1_1ControlPolicy.html',1,'tcp']]],
   ['controlpolicy_3c_20num_5finputs_2c_20num_5foutputs_2c_20float_20_3e_5',['ControlPolicy&lt; num_inputs, num_outputs, float &gt;',['../classtcp_1_1ControlPolicy.html',1,'tcp']]],
-  ['controlpolicy_3c_20num_5fstates_2c_20num_5fstates_2c_20float_20_3e_6',['ControlPolicy&lt; num_states, num_states, float &gt;',['../classtcp_1_1ControlPolicy.html',1,'tcp']]]
+  ['controlpolicy_3c_20num_5fstates_2c_20num_5fstates_2c_20float_20_3e_6',['ControlPolicy&lt; num_states, num_states, float &gt;',['../classtcp_1_1ControlPolicy.html',1,'tcp']]],
+  ['copyto_7',['copyTo',['../classtmm_1_1Matrix.html#a53f08cbacb9947357bd21af84e16ae91',1,'tmm::Matrix']]]
 ];

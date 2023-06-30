@@ -145,8 +145,8 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="line"> </div>
 <div class="line"><a class="code" href="classtmm_1_1Matrix.html">tmm::Matrix&lt;3,3&gt;</a> A(A_raw);</div>
 </div><!-- fragment --><hr  />
-<p><b>Getting the inverse of a square matrix</b> </p><div class="fragment"><div class="line"><a class="code" href="classtmm_1_1Matrix.html">tmm::Matrix&lt;3,3&gt;</a> A_inv = A.<a class="code" href="classtmm_1_1Matrix.html#af133cec858bfa0d739cf02662bbf7c1f">inverse</a>();</div>
-<div class="ttc" id="aclasstmm_1_1Matrix_html_af133cec858bfa0d739cf02662bbf7c1f"><div class="ttname"><a href="classtmm_1_1Matrix.html#af133cec858bfa0d739cf02662bbf7c1f">tmm::Matrix::inverse</a></div><div class="ttdeci">enable_if_t&lt;(m==n), T &gt; inverse() const</div><div class="ttdoc">Attempts to invert the matrix.</div><div class="ttdef"><b>Definition:</b> TMM_matrix.hpp:474</div></div>
+<p><b>Getting the inverse of a square matrix</b> </p><div class="fragment"><div class="line"><a class="code" href="classtmm_1_1Matrix.html">tmm::Matrix&lt;3,3&gt;</a> A_inv = A.<a class="code" href="classtmm_1_1Matrix.html#a75f6e93616f66d682dec1946dd6ad104">inverse</a>();</div>
+<div class="ttc" id="aclasstmm_1_1Matrix_html_a75f6e93616f66d682dec1946dd6ad104"><div class="ttname"><a href="classtmm_1_1Matrix.html#a75f6e93616f66d682dec1946dd6ad104">tmm::Matrix::inverse</a></div><div class="ttdeci">tmm::enable_if_t&lt;(m==n), T &gt; inverse() const</div><div class="ttdoc">Attempts to invert the matrix.</div><div class="ttdef"><b>Definition:</b> TMM_matrix.hpp:501</div></div>
 </div><!-- fragment --><hr  />
 <p><b>Printing a matrix to Serial if the Arduio library is available</b> </p><div class="fragment"><div class="line">A.printTo(Serial); <span class="comment">// Arduino</span></div>
 <div class="line">A.printTo(std::cout); <span class="comment">// CMake</span></div>
