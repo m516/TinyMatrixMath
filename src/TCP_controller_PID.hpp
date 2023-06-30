@@ -11,7 +11,7 @@ namespace tcp{
     template<tmm::Size num_inputs_and_outputs = 1, typename Scalar = float>
     class Controller_PID: public ControlPolicy<num_inputs_and_outputs, num_inputs_and_outputs, Scalar>{
         public:
-        tmm::Matrix<1, num_inputs_and_outputs, Scalar> Kp, Ki, Kd;
+        tmm::Matrix<num_inputs_and_outputs, 1, Scalar> Kp, Ki, Kd;
         using ControlPolicy<num_inputs_and_outputs, num_inputs_and_outputs, Scalar>::time_since_last_update_seconds;
         using ControlPolicy<num_inputs_and_outputs, num_inputs_and_outputs, Scalar>::update_timestamp;
         virtual void update(){
@@ -24,6 +24,6 @@ namespace tcp{
             update_timestamp();
         }
         private:
-        tmm::Matrix<1, num_inputs_and_outputs, Scalar> _previous, _sum;
+        tmm::Matrix<num_inputs_and_outputs, 1, Scalar> _previous, _sum;
     };
 }

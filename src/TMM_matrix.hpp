@@ -82,10 +82,36 @@ namespace tmm{
         operator[](Size i)
         {return data[i];}
 
-
-        template<typename T = Scalar, typename = enable_if_t<(m==1&&n==1), T>> operator T() { 
+        /// @brief Implicit casting to the Scalar type, enabled only if this matrix is 1x1
+        template<typename T = Scalar, typename = tmm::enable_if_t<(m==1&&n==1), T>> operator T() { 
             return data[0][0]; 
         }
+
+        /// @brief Returns true if all elements of this matrix are equal to the elements of another matrix, within some tolerance
+        /// @tparam Other_Scalar the type of the other matrix
+        /// @param other the matrix to compare to
+        /// @param tolerance the tolerance to use when comparing elements
+        /// @return true if all elements of this matrix are equal to the elements of another matrix, within some tolerance
+        template<typename Other_Scalar>
+        bool equals(const Matrix<n,m,Scalar> &other, Scalar tolerance) const {
+            for(Size i = 0; i < n; i++) 
+            for(Size j = 0; j < m; j++){
+                Scalar comp = data[i][j]-other.data[i][j];
+                if(comp < -tolerance || comp > tolerance) return false;
+            }
+            return true;
+        }
+
+        /// @brief Returns true if all elements of this matrix are identically equal to the elements of another matrix
+        /// @param other the matrix to compare to
+        /// @return true if all elements of this matrix are identically equal to the elements of another matrix
+        /// @note For floating-point matrices, consider using equals() instead. equals() allows for a tolerance.
+        template<typename Other_Scalar>
+        bool operator==(const Matrix<n,m,Other_Scalar> &other) const {
+            return equals<Other_Scalar>(other, 0.f);
+        }
+
+
 
         template<Size q> 
         Matrix<n,m+q,Scalar>
@@ -332,7 +358,8 @@ namespace tmm{
             return get<n,1>(0, j);
         }
 
-
+        /// @brief Copies the contents of this matrix to another matrix
+        /// @param other the matrix to copy to
         void
         copyTo(Matrix<n,m,Scalar> &other) const
         {
@@ -383,7 +410,7 @@ namespace tmm{
 
         #ifndef TMM_DISABLE_RECURSIVE
         template <typename T = Scalar>
-        enable_if_t<(m==n), T>
+        tmm::enable_if_t<(m==n), T>
         determinant() const
         {
             if(n == 0) { return 1; }
@@ -420,7 +447,7 @@ namespace tmm{
 
 
         template <typename T = Matrix<n,n,Scalar>>
-        enable_if_t<(m==n), T>
+        tmm::enable_if_t<(m==n), T>
         cofactor() const
         {
             Matrix<n,n,Scalar> M;
@@ -470,7 +497,7 @@ namespace tmm{
         /// @warning This method is not implemented correctly yet.
         /// @todo fix and test this method
         template <typename T = Matrix<n,n,Scalar>>
-        enable_if_t<(m==n), T>
+        tmm::enable_if_t<(m==n), T>
         inverse() const
         {
             // The matrix is the adjugate divided by the determinant,

@@ -1,10 +1,10 @@
 # CMakeList.txt : Top-level CMake project file, do global configuration
 # and include sub-projects here.
 
-cmake_minimum_required (VERSION 3.10)
+cmake_minimum_required (VERSION 3.12)
 
 # Options
-option(TINYMATRIXMATH_BUILD_TESTS    "Build all projects in the 'test' folder" ON)
+option(TINYMATRIXMATH_BUILD_TESTS    "Build all projects in the 'test' folder"     ON)
 option(TINYMATRIXMATH_BUILD_EXAMPLES "Build all projects in the 'examples' folder" ON)
 option(TINYMATRIXMATH_BUILD_DOCS     "Build all projects in the 'examples' folder" ON)
 
@@ -42,11 +42,7 @@ message("${BoldMagenta}CMake utility directory: ${MACRO_DIRECTORY}${ColorReset}"
 # By using CMake, it's safe to assume that the Standard Library is available.
 # (That's not the case when we're using this library in an Arduino library!)
 # Manually define a compile-time definition
-if(CMAKE_VERSION VERSION_GREATER 3.12)
-    add_compile_definitions(USING_STANDARD_LIBRARY=1)
-else()
-    add_definitions("-DUSING_STANDARD_LIBRARY=1")
-endif()
+# add_compile_definitions(USING_STANDARD_LIBRARY=1)
 
 
 # Serializer
@@ -56,6 +52,7 @@ src/Serializer.cpp
 )
 target_link_libraries (serializer)
 target_include_directories(serializer PUBLIC ${PROJECT_SOURCE_DIR}/src)
+target_compile_definitions(serializer PUBLIC USING_STANDARD_LIBRARY)
 
 
 # TinyMatrixMath
@@ -68,16 +65,24 @@ src/TinyMatrixMath.cpp
 )
 target_link_libraries (tinymatrixmath)
 target_include_directories(tinymatrixmath PUBLIC ${PROJECT_SOURCE_DIR}/src)
+target_compile_definitions(tinymatrixmath PUBLIC USING_STANDARD_LIBRARY)
 
 # TinyControlPolicy
 add_library (tinycontrolpolicies ${PROJECT_SOURCES}
-src/TCP_control_policy.hpp
-src/TCP_controller_PID.hpp
-src/TinyControlPolicies.cpp
+src/TCP_control_policy.hpp 
+src/TCP_controller_LTI.hpp 
+src/TCP_controller_passthrough.hpp 
+src/TCP_controller_PID.hpp 
+src/TCP_robot_link.hpp 
+src/TCP_states.hpp
+src/TCP_utils.hpp
+src/TCP_utils.cpp
+src/TinyControlPolicies.cpp 
 src/TinyControlPolicies.hpp
 )
 target_link_libraries (tinycontrolpolicies)
 target_include_directories(tinycontrolpolicies PUBLIC ${PROJECT_SOURCE_DIR}/src)
+target_compile_definitions(tinycontrolpolicies PUBLIC USING_STANDARD_LIBRARY)
 
 
 

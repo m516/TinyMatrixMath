@@ -5,15 +5,10 @@
 
 namespace tcp{
 
-
-    template<tmm::Size num_inputs, tmm::Size num_outputs, typename Scalar = float>
-    class ControlPolicy{
+    template<tmm::Size num_inputs, typename Scalar = float>
+    class States{
         public:
-        tmm::Matrix<num_inputs,  1, Scalar> inputs;
-        tmm::Matrix<num_outputs, 1, Scalar> outputs;
-        virtual void update() = 0;
-
-
+        tmm::Matrix<num_inputs,  1, Scalar> states;
 
         // Timekeeping
 
@@ -39,7 +34,6 @@ namespace tcp{
             return (float)instantaneous_update_period_milliseconds() / 1000.f;
         }
 
-        protected:
         /// @brief Call this at the end of your update() function to update the timekeeping variables
         void update_timestamp(){
             unsigned long now = millis(); 

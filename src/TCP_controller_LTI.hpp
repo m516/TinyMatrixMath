@@ -4,7 +4,7 @@
 
 namespace tcp{
 
-    /// @brief The classic discrete-time linear time-invariant system: X_dot = A X + B U; Y = C X + D <br>
+    /// @brief The classic discrete-time linear time-invariant system: `X_dot = A X + B U; Y = C X + D` <br>
     /// It uses the system's time to compensate for function calls at irregular intervals (units are in seconds).
     /// @tparam Scalar the common datatype to use for all operations.
     /// @tparam num_inputs          the size of u
