@@ -108,17 +108,18 @@ Public Member Functions</h2></td></tr>
 Public Attributes</h2></td></tr>
 <tr class="memitem:aaea38ddece7a4b06a9d70bd009155ea0"><td class="memItemLeft" align="right" valign="top"><a id="aaea38ddece7a4b06a9d70bd009155ea0"></a>
 const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classserializer_1_1Deserializer.html#aaea38ddece7a4b06a9d70bd009155ea0">prefix</a> = 'a'</td></tr>
-<tr class="memdesc:aaea38ddece7a4b06a9d70bd009155ea0"><td class="mdescLeft">&#160;</td><td class="mdescRight">a constant that is used to identify the beginning of a serialized object <br /></td></tr>
+<tr class="memdesc:aaea38ddece7a4b06a9d70bd009155ea0"><td class="mdescLeft">&#160;</td><td class="mdescRight">a constant that is used to identify the beginning of a serialized object over a bytestream. Must be consistent with a <a class="el" href="classserializer_1_1Serializer.html#ae6e386b427bcf511ebc333354094a1c4" title="a constant that is used to identify the beginning of a serialized object over a bytestream....">Serializer.prefix</a>. <br /></td></tr>
 <tr class="separator:aaea38ddece7a4b06a9d70bd009155ea0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8afd4ba0ca35833c4ae4ad8d952e58cf"><td class="memItemLeft" align="right" valign="top"><a id="a8afd4ba0ca35833c4ae4ad8d952e58cf"></a>
 const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classserializer_1_1Deserializer.html#a8afd4ba0ca35833c4ae4ad8d952e58cf">id</a></td></tr>
-<tr class="memdesc:a8afd4ba0ca35833c4ae4ad8d952e58cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">a constant that is specific to the type of object being serialized <br /></td></tr>
+<tr class="memdesc:a8afd4ba0ca35833c4ae4ad8d952e58cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">a constant, unique identifier for this particular <a class="el" href="classserializer_1_1Serializer.html" title="A general purpose basic serializer for any instantiable data type (compatible with the Deserializer c...">Serializer</a> object. Must be consistent with a <a class="el" href="classserializer_1_1Deserializer.html#a8afd4ba0ca35833c4ae4ad8d952e58cf" title="a constant, unique identifier for this particular Serializer object. Must be consistent with a Deseri...">Deserializer.id</a>. <br /></td></tr>
 <tr class="separator:a8afd4ba0ca35833c4ae4ad8d952e58cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9dedc6e1feb0df2812e615ebb89b537c"><td class="memItemLeft" align="right" valign="top"><a id="a9dedc6e1feb0df2812e615ebb89b537c"></a>
-T&#160;</td><td class="memItemRight" valign="bottom"><b>object</b></td></tr>
+<tr class="memitem:a9dedc6e1feb0df2812e615ebb89b537c"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classserializer_1_1Deserializer.html#a9dedc6e1feb0df2812e615ebb89b537c">object</a></td></tr>
+<tr class="memdesc:a9dedc6e1feb0df2812e615ebb89b537c"><td class="mdescLeft">&#160;</td><td class="mdescRight">A buffer for collecting the object from its bytes. This is valid only when the deserialize function returns true.  <a href="classserializer_1_1Deserializer.html#a9dedc6e1feb0df2812e615ebb89b537c">More...</a><br /></td></tr>
 <tr class="separator:a9dedc6e1feb0df2812e615ebb89b537c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d76ac598999ba8d5ee855a01601b3dc"><td class="memItemLeft" align="right" valign="top"><a id="a1d76ac598999ba8d5ee855a01601b3dc"></a>
-const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>suffix</b> = 'z'</td></tr>
+const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classserializer_1_1Deserializer.html#a1d76ac598999ba8d5ee855a01601b3dc">suffix</a> = 'z'</td></tr>
+<tr class="memdesc:a1d76ac598999ba8d5ee855a01601b3dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">a constant that is used to identify the end of a serialized object over a bytestream. Must be consistent with a <a class="el" href="classserializer_1_1Deserializer.html#a1d76ac598999ba8d5ee855a01601b3dc" title="a constant that is used to identify the end of a serialized object over a bytestream....">Deserializer.suffix</a>. <br /></td></tr>
 <tr class="separator:a1d76ac598999ba8d5ee855a01601b3dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a91a46bcff7c731d3a76dd761eb0c1e48"><td class="memItemLeft" align="right" valign="top"><a id="a91a46bcff7c731d3a76dd761eb0c1e48"></a>
 uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>checksum</b></td></tr>
@@ -222,6 +223,26 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a9dedc6e1feb0df2812e615ebb89b537c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9dedc6e1feb0df2812e615ebb89b537c">&#9670;&nbsp;</a></span>object</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">T <a class="el" href="classserializer_1_1Deserializer.html">serializer::Deserializer</a>&lt; T &gt;::object</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>A buffer for collecting the object from its bytes. This is valid only when the deserialize function returns true. </p>
+<dl class="section warning"><dt>Warning</dt><dd>This object changes every time <code>bool deserialize</code> is called, so it's only valid if the deserialize function discovers a new object (when it returns true.) If memory is not a concern, consider copying the deserialized object to another location for further processing. </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/<a class="el" href="Serializer_8hpp_source.html">Serializer.hpp</a></li>
 </ul>
@@ -230,7 +251,7 @@ template&lt;typename T &gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>serializer</b></li><li class="navelem"><a class="el" href="classserializer_1_1Deserializer.html">Deserializer</a></li>
+    <li class="navelem"><a class="el" href="namespaceserializer.html">serializer</a></li><li class="navelem"><a class="el" href="classserializer_1_1Deserializer.html">Deserializer</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
