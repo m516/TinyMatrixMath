@@ -14,7 +14,19 @@ using uint8_t = std::uint8_t;
 
 
 
-
+/// @brief A small, cross-platform library with common routines for sending 
+/// data over byte streams. RAM is minimized and allocated statically,
+/// enabling this library's integration into embedded systems. <br>
+/// This library has two classes:
+/// - Serializer: a class for serializing objects and sending them over byte streams.
+/// - Deserializer: a class for deserializing objects and reading them from byte streams.
+/// Some of the features of this library include:
+/// - Support for multiple Serializers and Deserializers on the same byte stream. 
+///     (safely up to 256 of each)
+/// - Support for serializing any data type
+/// - Support for nearly any data stream (Serial, SoftwareSerial, etc.;
+///      std::cout and custom streams can be used by implementing a lambda)
+/// - Automatically computing 16-bit checksums to improve reliability.
 namespace serializer{
 
 
@@ -29,7 +41,8 @@ namespace serializer{
         return checksum;
     } // end of compute_checksum
 
-
+    /// @brief Creates a unique ID for a Serializer object
+    /// @return 
     uint8_t create_unique_id();
 
 
@@ -43,9 +56,11 @@ namespace serializer{
 
         public:
 
-
+        /// @brief a constant that is used to identify the beginning of a serialized object over a bytestream. Must be consistent with a Deserializer.prefix.
         const uint8_t  prefix = 'a';
+        /// @brief a constant, unique identifier for this particular Serializer object. Must be consistent with a Deserializer.id.
         const uint8_t  id;
+        /// @brief a constant that is used to identify the end of a serialized object over a bytestream. Must be consistent with a Deserializer.suffix.
         const uint8_t  suffix = 'z';
 
         /// @brief Creates a Serializer that serialize objects
@@ -144,11 +159,16 @@ namespace serializer{
 
         public:
 
-        /// @brief a constant that is used to identify the beginning of a serialized object
+        /// @brief a constant that is used to identify the beginning of a serialized object over a bytestream. Must be consistent with a Serializer.prefix.
         const uint8_t  prefix = 'a';
-        /// @brief a constant that is specific to the type of object being serialized
+        /// @brief a constant, unique identifier for this particular Serializer object. Must be consistent with a Deserializer.id.
         const uint8_t  id;
+        /// @brief A buffer for collecting the object from its bytes. This is valid only when the deserialize function returns true.
+        /// @warning This object changes every time `bool deserialize` is called, so it's only valid if the deserialize function 
+        /// discovers a new object (when it returns true.) If memory is not a concern, consider copying the deserialized object to another
+        /// location for further processing.
         T        object;
+        /// @brief a constant that is used to identify the end of a serialized object over a bytestream. Must be consistent with a Deserializer.suffix.
         const uint8_t  suffix = 'z';
         uint16_t checksum;
 
