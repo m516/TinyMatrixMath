@@ -51,7 +51,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"Serializer_8hpp_source.html"
+""
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
