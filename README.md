@@ -30,8 +30,7 @@ It is available as:
 * a library in the Arduino Library Manager (Tiny Matrix Math)
 * a CMake library (`TARGET_LINK_LIBRARIES (${EXECUTABLE_NAME} tinymatrixmath)`)
 
-Compare to the  library
-and [Eigen](https://eigen.tuxfamily.org/index.php?title=Main_Page). Although this library is not 
+Although this library is not 
 as feature-rich as [Basic Linear Algebra](https://github.com/tomstewart89/BasicLinearAlgebra)
 or [Eigen](https://eigen.tuxfamily.org/index.php?title=Main_Page), it can easily be integrated into 
 many kinds of projects running on platforms ranging from Arduinos to supercomputers with its 
