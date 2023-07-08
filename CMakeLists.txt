@@ -3,11 +3,6 @@
 
 cmake_minimum_required (VERSION 3.12)
 
-# Options
-option(TINYMATRIXMATH_BUILD_TESTS    "Build all projects in the 'test' folder"     ON)
-option(TINYMATRIXMATH_BUILD_EXAMPLES "Build all projects in the 'examples' folder" ON)
-option(TINYMATRIXMATH_BUILD_DOCS     "Build all projects in the 'examples' folder" ON)
-
 
 # Define colors
 if(NOT WIN32)
@@ -30,8 +25,13 @@ if(NOT WIN32)
   set(BoldWhite   "${Esc}[1;37m")
 endif()
 
-project ("TinyMatrixMath" C CXX)
+project ("tinymatrixmath" C CXX)
 set (CMAKE_CXX_STANDARD 20) # We use new features like std::endian, std::float_32, ...
+
+# Options
+option(${PROJECT_NAME}_BUILD_TESTS    "Build all projects in the 'test' folder (requires GoogleTest)"     ON)
+option(${PROJECT_NAME}_BUILD_EXAMPLES "Build all projects in the 'examples' folder"                       ON)
+option(${PROJECT_NAME}_BUILD_DOCS     "Build documentation (requires Doxygen)"                            ON)
 
 
 # Set the macro/helper directory 
@@ -44,19 +44,8 @@ message("${BoldMagenta}CMake utility directory: ${MACRO_DIRECTORY}${ColorReset}"
 # Manually define a compile-time definition
 # add_compile_definitions(USING_STANDARD_LIBRARY=1)
 
-
-# Serializer
-add_library (serializer ${PROJECT_SOURCES}
-src/Serializer.hpp
-src/Serializer.cpp
-)
-target_link_libraries (serializer)
-target_include_directories(serializer PUBLIC ${PROJECT_SOURCE_DIR}/src)
-target_compile_definitions(serializer PUBLIC USING_STANDARD_LIBRARY)
-
-
 # TinyMatrixMath
-add_library (tinymatrixmath ${PROJECT_SOURCES}
+add_library (${PROJECT_NAME}
 src/TinyMatrixMath.hpp
 src/TMM_enable_if.hpp
 src/TMM_matrix.hpp
@@ -67,48 +56,23 @@ target_link_libraries (tinymatrixmath)
 target_include_directories(tinymatrixmath PUBLIC ${PROJECT_SOURCE_DIR}/src)
 target_compile_definitions(tinymatrixmath PUBLIC USING_STANDARD_LIBRARY)
 
-# TinyControlPolicy
-add_library (tinycontrolpolicies ${PROJECT_SOURCES}
-src/TCP_control_policy.hpp 
-src/TCP_controller_LTI.hpp 
-src/TCP_controller_passthrough.hpp 
-src/TCP_controller_PID.hpp 
-src/TCP_robot_link.hpp 
-src/TCP_states.hpp
-src/TCP_utils.hpp
-src/TCP_utils.cpp
-src/TinyControlPolicies.cpp 
-src/TinyControlPolicies.hpp
-)
-target_link_libraries (tinycontrolpolicies)
-target_include_directories(tinycontrolpolicies PUBLIC ${PROJECT_SOURCE_DIR}/src)
-target_compile_definitions(tinycontrolpolicies PUBLIC USING_STANDARD_LIBRARY)
-
-
-
-# Google Test
-message("${BoldYellow}Using local copy of the Google Test framework${ColorReset}")
-add_subdirectory(thirdparty/cmake/googletest)
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-
-
 message("${BoldYellow}Library search complete!${ColorReset}")
 
   
 # Include tests.
-if(TINYMATRIXMATH_BUILD_TESTS)
+if(${PROJECT_NAME}_BUILD_TESTS)
 include(CTest)
 add_subdirectory ("test")
 endif()
 
 
 # Include examples.
-if(TINYMATRIXMATH_BUILD_EXAMPLES)
+if(${PROJECT_NAME}_BUILD_EXAMPLES)
 add_subdirectory(cmake_examples)
 endif()
 
 # Documentation
-if(TINYMATRIXMATH_BUILD_DOCS)
+if(${PROJECT_NAME}_BUILD_DOCS)
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
 set(DOXYGEN_GENERATE_HTML YES)
@@ -120,7 +84,7 @@ set(DOXYGEN_HTML_STYLESHEET        ${PROJECT_SOURCE_DIR}/docs/thirdparty/doxygen
 set(DOXYGEN_HTML_COLORSTYLE        LIGHT)
 set(DOXYGEN_USE_MDFILE_AS_MAINPAGE ${PROJECT_SOURCE_DIR}/README.md)
 doxygen_add_docs(
-  TMM_doxygen
+  ${PROJECT_NAME}_docs
   ${PROJECT_SOURCE_DIR}/README.md
   ${PROJECT_SOURCE_DIR}/src
   COMMENT "Generate docs"

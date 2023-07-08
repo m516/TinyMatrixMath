@@ -27,7 +27,7 @@ jobs:
         mkdir build
         cd build
         cmake ..
-        make TMM_doxygen -j $(nproc)
+        make tinymatrixmath_doxygen -j $(nproc)
 
     # Publish HTML to GitHub Pages
     - name: Publish HTML to GitHub Pages
