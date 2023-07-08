@@ -52,16 +52,16 @@ src/TMM_matrix.hpp
 src/TMM_matrix.cpp
 src/TinyMatrixMath.cpp
 )
-target_link_libraries (tinymatrixmath)
-target_include_directories(tinymatrixmath PUBLIC ${PROJECT_SOURCE_DIR}/src)
-target_compile_definitions(tinymatrixmath PUBLIC USING_STANDARD_LIBRARY)
+target_link_libraries (${PROJECT_NAME})
+target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/src)
+target_compile_definitions(${PROJECT_NAME} PUBLIC USING_STANDARD_LIBRARY)
 
 message("${BoldYellow}Library search complete!${ColorReset}")
 
   
 # Include tests.
 if(${PROJECT_NAME}_BUILD_TESTS)
-include(CTest)
+include(GoogleTest)
 add_subdirectory ("test")
 endif()
 

@@ -216,3 +216,5 @@ For making your own CMake/Arduino library from this template, complete the follo
 * After testing your new library thoroughly, add it to the Arduino Library Manager by following the [official instructions](https://github.com/arduino/library-registry#adding-a-library-to-library-manager)
 
 And you're finally done!
+
+If you run into any issues along the way, file them [here](https://github.com/m516/TinyMatrixMath/issues)
