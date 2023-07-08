@@ -183,8 +183,33 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div><!-- fragment --><h2>More examples  </h2>
 <ul>
 <li>Arduino examples can be found in the "examples" folder</li>
-<li>Examples for CMake project can be found in the "cmake_examples" folder </li>
+<li>Examples for CMake project can be found in the "cmake_examples" folder</li>
 </ul>
+<h2>Using this Repo as a Template  </h2>
+<p>For making your own CMake/Arduino library from this template, complete the following steps:</p><ul>
+<li>Hit the "Use this template" button on the <a href="https://github.com/m516/TinyMatrixMath">GitHub repo</a> to copy this project to your account.</li>
+<li>Delete the source code (under <code>src</code>) and add your own.</li>
+<li>In the root-level CMakeLists.txt<ul>
+<li>On the line containing <code>project ("tinymatrixmath" C CXX)</code>, replace <code>tinymatrixmath</code> wtih the name of your project. We'll use this name later.</li>
+<li>There is a list of files under the line containing <code>add_library (${PROJECT_NAME}</code>. Replace that list with a list of the files that belong to your new library.</li>
+</ul>
+</li>
+<li>In <code>.github/workflows/cmake_docs.yml</code>, there is a line containing <code>make tinymatrixmath_doxygen -j </code>. Replace <code>tinymatrixmath</code> with the name of your project.</li>
+<li>For automatically publishing documentation:<ul>
+<li>In the root folder of a clone of your new repo, Run the following code snippet to make a new, blank <code>docs</code> branch: ```sh git switch &ndash;orphan docs git commit &ndash;allow-empty -m "Initial commit on orphan branch" git push -u origin docs ```</li>
+<li>On GitHub, in this repo,<ul>
+<li>under <code>settings -&gt; Pages -&gt; Build and deployment -&gt; Branch</code>, select the <code>docs</code> branch.</li>
+<li>under <code>settings -&gt; Actions -&gt; General -&gt; Workflow Permissions</code>, select the <code>Read and write permissions</code> radio button to allow the docs workflow to push to the <code>docs</code> branch.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Clear the <code>examples</code> folder and place all your Arduino example sketches there.</li>
+<li>Clear the <code>cmake_examples</code> folder and place all your CMake example executables there. Update <code>cmake_examples/CmakeLists.txt</code> accordingly.</li>
+<li>Clear the <code>test</code> folder and place all your unit tests there. Update <code>test/CMakeLists.txt</code> accordingly.</li>
+<li>After testing your new library thoroughly, add it to the Arduino Library Manager by following the <a href="https://github.com/arduino/library-registry#adding-a-library-to-library-manager">official instructions</a></li>
+</ul>
+<p>And you're finally done! </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->
