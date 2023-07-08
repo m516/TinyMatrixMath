@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['deserialize_9',['deserialize',['../classserializer_1_1Deserializer.html#a6a97d17d3ad7902e49b828309b6b1cf8',1,'serializer::Deserializer']]],
-  ['deserializer_10',['Deserializer',['../classserializer_1_1Deserializer.html#a43a1c424755c34fd897f18d8a5a86d2e',1,'serializer::Deserializer::Deserializer()'],['../classserializer_1_1Deserializer.html',1,'serializer::Deserializer&lt; T &gt;']]]
+  ['enable_5fif_1',['enable_if',['../structtmm_1_1enable__if.html',1,'tmm']]],
+  ['enable_5fif_3c_20true_2c_20t_20_3e_2',['enable_if&lt; true, T &gt;',['../structtmm_1_1enable__if_3_01true_00_01T_01_4.html',1,'tmm']]],
+  ['equals_3',['equals',['../classtmm_1_1Matrix.html#ab01a4548b379e870c5a02f1ebef6446d',1,'tmm::Matrix']]]
 ];

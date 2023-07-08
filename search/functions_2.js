@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['equals_68',['equals',['../classtmm_1_1Matrix.html#ab01a4548b379e870c5a02f1ebef6446d',1,'tmm::Matrix']]]
+  ['inverse_14',['inverse',['../classtmm_1_1Matrix.html#a75f6e93616f66d682dec1946dd6ad104',1,'tmm::Matrix']]]
 ];

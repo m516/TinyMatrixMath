@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['deserialize_66',['deserialize',['../classserializer_1_1Deserializer.html#a6a97d17d3ad7902e49b828309b6b1cf8',1,'serializer::Deserializer']]],
-  ['deserializer_67',['Deserializer',['../classserializer_1_1Deserializer.html#a43a1c424755c34fd897f18d8a5a86d2e',1,'serializer::Deserializer']]]
+  ['equals_13',['equals',['../classtmm_1_1Matrix.html#ab01a4548b379e870c5a02f1ebef6446d',1,'tmm::Matrix']]]
 ];
