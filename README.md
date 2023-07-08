@@ -187,3 +187,32 @@ Here are some examples of how to use the library:
 
 * Arduino examples can be found in the "examples" folder
 * Examples for CMake project can be found in the "cmake_examples" folder
+
+
+<h2>
+  <p align="center"> Using this Repo as a Template </p>
+</h2>
+
+For making your own CMake/Arduino library from this template, complete the following steps:
+* Hit the "Use this template" button on the [GitHub repo](https://github.com/m516/TinyMatrixMath) to copy this project to your account.
+* Delete the source code (under `src`) and add your own.
+* In the root-level CMakeLists.txt
+  * On the line containing `project ("tinymatrixmath" C CXX)`, replace `tinymatrixmath` wtih the name of your project. We'll use this name later.
+  * There is a list of files under the line containing `add_library (${PROJECT_NAME}`. Replace that list with a list of the files that belong to your new library.
+* In `.github/workflows/cmake_docs.yml`, there is a line containing `make tinymatrixmath_doxygen -j $(nproc)`. Replace `tinymatrixmath` with the name of your project.
+* For automatically publishing documentation:
+  * In the root folder of a clone of your new repo, Run the following code snippet to make a new, blank `docs` branch:
+    ```sh
+    git switch --orphan docs
+    git commit --allow-empty -m "Initial commit on orphan branch"
+    git push -u origin docs
+    ```
+  * On GitHub, in this repo,
+    * under `settings -> Pages -> Build and deployment -> Branch`, select the `docs` branch.
+    * under `settings -> Actions -> General -> Workflow Permissions`, select the `Read and write permissions`  radio button to allow the docs workflow to push to the `docs` branch.
+* Clear the `examples` folder and place all your Arduino example sketches there.
+* Clear the `cmake_examples` folder and place all your CMake example executables there. Update `cmake_examples/CmakeLists.txt` accordingly.
+* Clear the `test` folder and place all your unit tests there. Update `test/CMakeLists.txt` accordingly.
+* After testing your new library thoroughly, add it to the Arduino Library Manager by following the [official instructions](https://github.com/arduino/library-registry#adding-a-library-to-library-manager)
+
+And you're finally done!
