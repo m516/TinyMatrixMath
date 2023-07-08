@@ -26,7 +26,7 @@ if(NOT WIN32)
 endif()
 
 project ("tinymatrixmath" C CXX)
-set (CMAKE_CXX_STANDARD 20) # We use new features like std::endian, std::float_32, ...
+set (CMAKE_CXX_STANDARD 14)
 
 # Options
 option(${PROJECT_NAME}_BUILD_TESTS    "Build all projects in the 'test' folder (requires GoogleTest)"     ON)
@@ -61,7 +61,6 @@ message("${BoldYellow}Library search complete!${ColorReset}")
   
 # Include tests.
 if(${PROJECT_NAME}_BUILD_TESTS)
-include(GoogleTest)
 add_subdirectory ("test")
 endif()
 
