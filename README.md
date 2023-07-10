@@ -193,6 +193,10 @@ Here are some examples of how to use the library:
   <p align="center"> Using this Repo as a Template </p>
 </h2>
 
+The following projects were initially generated from this template:
+* [TinySerializer](https://github.com/m516/TinySerializer)
+* [TinyControlPolicies](https://github.com/m516/TinyControlPolicies)
+
 For making your own CMake/Arduino library from this template, complete the following steps:
 * Hit the "Use this template" button on the [GitHub repo](https://github.com/m516/TinyMatrixMath) to copy this project to your account.
 * Delete the source code (under `src`) and add your own.
