@@ -250,7 +250,7 @@ namespace tmm{
             Matrix<n,m,Scalar> M;
             for(Size i = 0; i < n; i++) 
             for(Size j = 0; j < m; j++) 
-            M[i][j]=data[i][j]+other.data[i][j];
+            M[i][j]=data[i][j]-other.data[i][j];
             return M;
         }
 
