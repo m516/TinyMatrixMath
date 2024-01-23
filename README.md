@@ -28,8 +28,8 @@ for doing math on small matrices with less than 2kb of
 instruction memory and 1kb of RAM.
 
 It is available as:
-* a library in the Arduino Library Manager (Tiny Matrix Math)
-* a CMake library (`TARGET_LINK_LIBRARIES (${EXECUTABLE_NAME} tinymatrixmath)`)
+* a library in the [Arduino Library Manager](https://www.arduino.cc/reference/en/libraries/tinymatrixmath/) and the [PlatformIO registry](https://registry.platformio.org/libraries/m516/TinyMatrixMath)
+* a CMake library (`TARGET_LINK_LIBRARIES (${EXECUTABLE_NAME} tinymatrixmath)`) compatible with C++ 11+
 
 Although this library is not 
 as feature-rich as [Basic Linear Algebra](https://github.com/tomstewart89/BasicLinearAlgebra)
