@@ -94,8 +94,8 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <p><img src="https://img.shields.io/github/issues/m516/TinyMatrixMath" alt="" class="inline"/> <img src="https://img.shields.io/github/forks/m516/TinyMatrixMath" alt="" class="inline"/> <img src="https://img.shields.io/github/stars/m516/TinyMatrixMath" alt="" class="inline"/> <img src="https://img.shields.io/github/license/m516/TinyMatrixMath" alt="" class="inline"/> <a href="https://registry.platformio.org/libraries/m516/TinyMatrixMath"><img src="https://badges.registry.platformio.org/packages/m516/library/TinyMatrixMath.svg" alt="" style="pointer-events: none;" class="inline"/></a> </p>
 <p>This library is a collection of functions and classes for doing math on small matrices with less than 2kb of instruction memory and 1kb of RAM.</p>
 <p>It is available as:</p><ul>
-<li>a library in the Arduino Library Manager (Tiny Matrix Math)</li>
-<li>a CMake library (<code>TARGET_LINK_LIBRARIES (${EXECUTABLE_NAME} tinymatrixmath)</code>)</li>
+<li>a library in the <a href="https://www.arduino.cc/reference/en/libraries/tinymatrixmath/">Arduino Library Manager</a> and the <a href="https://registry.platformio.org/libraries/m516/TinyMatrixMath">PlatformIO registry</a></li>
+<li>a CMake library (<code>TARGET_LINK_LIBRARIES (${EXECUTABLE_NAME} tinymatrixmath)</code>) compatible with C++ 11+</li>
 </ul>
 <p>Although this library is not as feature-rich as <a href="https://github.com/tomstewart89/BasicLinearAlgebra">Basic Linear Algebra</a> or <a href="https://eigen.tuxfamily.org/index.php?title=Main_Page">Eigen</a>, it can easily be integrated into many kinds of projects running on platforms ranging from Arduinos to supercomputers with its native integration into the Arduino Library Manager and CMake, simplifying the process of serialization.</p>
 <p>The <a href="https://github.com/m516/sheldrake">Sheldrake</a> library employs this library to send matrices between desktop environments and microcontrollers.</p>
