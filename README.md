@@ -19,7 +19,7 @@
 <img src=https://img.shields.io/github/forks/m516/TinyMatrixMath>
 <img src=https://img.shields.io/github/stars/m516/TinyMatrixMath>
 <img src=https://img.shields.io/github/license/m516/TinyMatrixMath>
-<img src=https://badges.registry.platformio.org/packages/m516/library/TinyMatrixMath.svg>
+<a href="https://registry.platformio.org/libraries/m516/TinyMatrixMath"><img src=https://badges.registry.platformio.org/packages/m516/library/TinyMatrixMath.svg></a>
 </p>
 
 
